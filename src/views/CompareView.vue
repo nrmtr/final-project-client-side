@@ -1,4 +1,7 @@
 <script lang="ts">
+export default {
+  // Your component code
+}
 </script>
 
 <template>
