@@ -38,14 +38,14 @@
           ดึงข้อมูลแบรนด์ที่เลือก
         </button>
         <!--  for api -->
-      <div v-if="apiResponse" class="mt-4 text-center">
-        <div class="bg-gray-700 p-4 rounded-lg text-white border-4 border-gray-600 shadow-xl">
-          <strong>ข้อมูลแบรนด์:</strong>
-          <p>รหัสแบรนด์: {{ apiResponse.id }}</p>
-          <p>ชื่อแบรนด์: {{ apiResponse.name }}</p>
-          <p>จำนวนอุปกรณ์: {{ apiResponse.devices }}</p>
+        <div v-if="apiResponse" class="mt-4 text-center">
+          <div class="bg-gray-700 p-4 rounded-lg text-white border-4 border-gray-600 shadow-xl">
+            <strong>ข้อมูลแบรนด์:</strong>
+            <p v-if="apiResponse">ID: {{ apiResponse.id }}</p>
+            <p v-if="apiResponse">Name: {{ apiResponse.name }}</p>
+            <p v-if="apiResponse">Devices: {{ apiResponse.devices }}</p>
+          </div>
         </div>
-      </div>
       </fieldset>
       <!-- ประเภทการใช้งาน -->
       <fieldset class="mb-6">
@@ -205,30 +205,29 @@ export default {
     },
     async fetchBrandDetails() {
       if (this.selectedLogos.length === 0) {
-        alert("กรุณาเลือกแบรนด์ก่อน.");
-        return;
+        alert('กรุณาเลือกแบรนด์ก่อน.')
+        return
       }
 
       try {
         const response = await axios.post(
-          "http://13.251.160.30/api/phone/typeofuse",
+          'http://13.251.160.30/api/phone/typeofuse',
           {
-            brand: this.selectedLogos, // Send selected logos
+            brand: "Samsung", // Send selected logos
           },
           {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
+               headers: {
+                 "Content-Type": "application/json",
+               },
+             }
+           )
 
-        this.apiResponse = response.data; // Save API response
-        console.log("API response:", response.data);
-
+        this.apiResponse = response.data // Save API response
+        console.log('API response:', response.data)
       } catch (error) {
-        console.error("Error fetching brand details:", error);
-        this.apiResponse = null;
-        alert("ไม่สามารถดึงข้อมูลได้. กรุณาลองใหม่อีกครั้ง");
+        console.error('Error fetching brand details:', error)
+        this.apiResponse = null
+        alert('ไม่สามารถดึงข้อมูลได้. กรุณาลองใหม่อีกครั้ง')
       }
     },
   },
