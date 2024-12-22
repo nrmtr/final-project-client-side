@@ -31,12 +31,12 @@
             </div>
           </div>
         </div>
-        <button
+        <!-- <button
           @click="fetchBrandDetails"
           class="block mx-auto mt-4 bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition-colors"
         >
           ดึงข้อมูลแบรนด์ที่เลือก
-        </button>
+        </button> -->
         <!--  for api -->
         <div v-if="apiResponse" class="mt-4 text-center">
           <div class="bg-gray-700 p-4 rounded-lg text-white border-4 border-gray-600 shadow-xl">
@@ -148,6 +148,12 @@ import SamsungLogo from '../assets/img/logo_samsung.png'
 import VivoLogo from '../assets/img/logo_vivo.png'
 import XiaomiLogo from '../assets/img/logo_xiaomi.png'
 import axios from 'axios'
+import { defineComponent } from "vue"
+interface ApiResponse {
+  id: string;
+  name: string;
+  devices: string[];
+}
 
 export default {
   data() {
@@ -187,9 +193,9 @@ export default {
           color: 'bg-gray-500 hover:bg-gray-600',
         },
       ],
-      selectedMobiles: [],
-      selectedLogos: [], // Store selected logo values here
-      apiResponse: null, // To store the response from the API
+      selectedLogos: [] as string[],
+      selectedMobiles: [] as string[], // Store selected logo values here
+      apiResponse: null as ApiResponse | null, // To store the response from the API
       selectedCategory: '',
       selectedPrice: { min: 0, max: 1000000 },
       // To store API response data
@@ -205,16 +211,17 @@ export default {
     },
     async fetchBrandDetails() {
       if (this.selectedLogos.length === 0) {
-        alert('กรุณาเลือกแบรนด์ก่อน.')
+        this.apiResponse = null;
         return
       }
 
       try {
+        const payload = {
+          brand: this.selectedLogos.join(","), // ส่งค่า selectedLogos
+        };
         const response = await axios.post(
           'http://13.251.160.30/api/phone/typeofuse',
-          {
-            brand: "Samsung", // Send selected logos
-          },
+          payload,
           {
                headers: {
                  "Content-Type": "application/json",
@@ -222,15 +229,26 @@ export default {
              }
            )
 
-        this.apiResponse = response.data // Save API response
-        console.log('API response:', response.data)
+           this.apiResponse = response.data; // เก็บผลลัพธ์จาก API
+        console.log('API response:', response.data);
       } catch (error) {
-        console.error('Error fetching brand details:', error)
-        this.apiResponse = null
-        alert('ไม่สามารถดึงข้อมูลได้. กรุณาลองใหม่อีกครั้ง')
+        console.error('Error fetching brand details:', error);
+        this.apiResponse = null;
+        alert('ไม่สามารถดึงข้อมูลได้. กรุณาลองใหม่อีกครั้ง');
+      }
+    },
+  
+  },
+  watch: {
+    selectedLogos(newLogos) {
+      if (newLogos.length > 0) {
+        this.fetchBrandDetails(); // ดึงข้อมูลเมื่อมีแบรนด์ถูกเลือก
+      } else {
+        this.apiResponse = null; // ล้างข้อมูลเมื่อไม่มีแบรนด์ถูกเลือก
       }
     },
   },
+  
 }
 </script>
 
