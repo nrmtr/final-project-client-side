@@ -1,7 +1,21 @@
 <script lang="ts">
-export default {
-  // Your component code
-}
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  data() {
+    return {
+      selectedMobiles: [] as string[],
+    };
+  },
+  mounted() {
+    const query = this.$route.query.mobiles;
+    if (query) {
+      this.selectedMobiles = JSON.parse(query as string);
+    } else {
+      alert('ไม่มีข้อมูลสำหรับเปรียบเทียบ');
+    }
+  },
+});
 </script>
 
 <template>

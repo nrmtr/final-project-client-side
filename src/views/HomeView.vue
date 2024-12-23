@@ -208,8 +208,11 @@ export default {
       if (this.selectedMobiles.length !== 3) {
         alert('กรุณาเลือก 3 รุ่นเพื่อเปรียบเทียบ')
       } else {
-        alert(`คุณเลือก: ${this.selectedMobiles.join(', ')}`)
-      }
+        this.$router.push({
+        name: 'compare',
+        query: { mobiles: JSON.stringify(this.selectedMobiles) },
+      })
+    }
     },
     async fetchBrandDetails() {
       if (this.selectedLogos.length === 0) {
