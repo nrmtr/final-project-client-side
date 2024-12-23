@@ -17,7 +17,7 @@
           </label>
         </div>
         <!-- Display selected logos in a box with clear visibility -->
-        <div v-if="selectedLogos.length > 0" class="mt-4 text-center">
+        <!-- <div v-if="selectedLogos.length > 0" class="mt-4 text-center">
           <div class="bg-gray-700 p-4 rounded-lg text-white border-4 border-black-600 shadow-xl">
             <strong>คุณเลือกแบรนด์:</strong>
             <div class="flex flex-wrap justify-center mt-2">
@@ -30,7 +30,7 @@
               </span>
             </div>
           </div>
-        </div>
+        </div> -->
         <!-- <button
           @click="fetchBrandDetails"
           class="block mx-auto mt-4 bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition-colors"
@@ -38,14 +38,14 @@
           ดึงข้อมูลแบรนด์ที่เลือก
         </button> -->
         <!--  for api -->
-        <div v-if="apiResponse" class="mt-4 text-center">
+        <!-- <div v-if="apiResponse" class="mt-4 text-center">
           <div class="bg-gray-700 p-4 rounded-lg text-white border-4 border-gray-600 shadow-xl">
             <strong>ข้อมูลแบรนด์:</strong>
             <p v-if="apiResponse">ID: {{ apiResponse.id }}</p>
             <p v-if="apiResponse">Name: {{ apiResponse.name }}</p>
             <p v-if="apiResponse">Devices: {{ apiResponse.devices }}</p>
           </div>
-        </div>
+        </div> -->
       </fieldset>
       <!-- ประเภทการใช้งาน -->
       <fieldset class="mb-6">
@@ -167,11 +167,11 @@ export default {
       mobiles: ['มือถือ01', 'มือถือ02', 'มือถือ03', 'มือถือ04', 'มือถือ05'],
       categories: [
         { label: 'ใช้งานทั่วไป', value: 'general', color: 'bg-gray-500 hover:bg-gray-600' },
-        { label: 'เล่นเกม', value: 'gaming', color: 'bg-gray-500 hover:bg-gray-600' },
+        { label: 'เล่นเกม', value: 'game', color: 'bg-gray-500 hover:bg-gray-600' },
         { label: 'ถ่ายรูปสวย', value: 'photography', color: 'bg-gray-500 hover:bg-gray-600' },
         { label: 'สำหรับไรเดอร์', value: 'rider', color: 'bg-gray-500 hover:bg-gray-600' },
         { label: 'AI Feature', value: 'ai', color: 'bg-gray-500 hover:bg-gray-600' },
-        { label: 'วิดีโอ ไลฟ์สด', value: 'video', color: 'bg-gray-500 hover:bg-gray-600' },
+        { label: 'วิดีโอ ไลฟ์สด', value: 'livestream', color: 'bg-gray-500 hover:bg-gray-600' },
       ],
       prices: [
         {
@@ -217,7 +217,8 @@ export default {
 
       try {
         const payload = {
-          brand: this.selectedLogos.join(","), // ส่งค่า selectedLogos
+          brand: this.selectedLogos, // ส่งค่า selectedLogos,
+          category: this.selectedCategory,
         };
         const response = await axios.post(
           'http://13.251.160.30/api/phone/typeofuse',
@@ -239,16 +240,24 @@ export default {
     },
   
   },
-  watch: {
-    selectedLogos(newLogos) {
-      if (newLogos.length > 0) {
+  // watch: {
+  //   selectedLogos(newLogos,) {
+  //     if (newLogos.length > 0) {
+  //       this.fetchBrandDetails(); // ดึงข้อมูลเมื่อมีแบรนด์ถูกเลือก
+  //     } else {
+  //       this.apiResponse = null; // ล้างข้อมูลเมื่อไม่มีแบรนด์ถูกเลือก
+  //     }
+  //   },
+  // },
+  watch :{
+    selectedPrice() {
+      if (this.selectedPrice.min && this.selectedPrice.max) {
         this.fetchBrandDetails(); // ดึงข้อมูลเมื่อมีแบรนด์ถูกเลือก
       } else {
-        this.apiResponse = null; // ล้างข้อมูลเมื่อไม่มีแบรนด์ถูกเลือก
+        this.apiResponse = null;
       }
-    },
-  },
-  
+    }
+  }
 }
 </script>
 
