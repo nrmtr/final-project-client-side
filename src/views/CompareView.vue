@@ -83,6 +83,7 @@ export default defineComponent({
 <template>
   <div class="flex justify-center items-center min-h-screen bg-gray-900">
     <div class="bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-4xl">
+      <br><br>
       <h1 class="text-center text-2xl font-bold mb-6">การเปรียบเทียบ</h1>
       <div v-if="apicompare && apicompare.phones" class="grid grid-cols-3 gap-4">
         <!-- Dynamic Phone Cards -->
@@ -96,7 +97,7 @@ export default defineComponent({
             <img
               :src="phone.image"
               alt="Phone image"
-              class="mx-auto rounded-lg w-32 h-32 object-cover"
+              class="mx-auto rounded-lg w-32 h-44 object-cover"
             />
           </div>
           <div>
@@ -122,7 +123,7 @@ export default defineComponent({
           <img
             :src="apicompare.phones.find(phone => phone.name === apicompare?.bestPhone)?.image"
             alt="Recommended phone image"
-            class="mx-auto rounded-lg w-40 h-40 object-cover mb-4"
+            class="mx-auto rounded-lg w-40 h-54 object-cover mb-4"
           />
         </div>
         <!-- Recommended Phone Details -->
