@@ -17,7 +17,7 @@
           </label>
         </div>
         <!-- Display selected logos in a box with clear visibility -->
-        <!-- <div v-if="selectedLogos.length > 0" class="mt-4 text-center">
+        <div v-if="selectedLogos.length > 0" class="mt-4 text-center">
           <div class="bg-gray-700 p-4 rounded-lg text-white border-4 border-black-600 shadow-xl">
             <strong>คุณเลือกแบรนด์:</strong>
             <div class="flex flex-wrap justify-center mt-2">
@@ -30,7 +30,7 @@
               </span>
             </div>
           </div>
-        </div> -->
+        </div>
         <!-- <button
           @click="fetchBrandDetails"
           class="block mx-auto mt-4 bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition-colors"
@@ -117,19 +117,22 @@
         <legend class="text-lg font-semibold mb-2 text-center text-white">
           เลือก 3 รุ่น เพื่อเปรียบเทียบ
         </legend>
-        <div class="grid grid-cols-3 gap-4">
-          <div v-for="(mobile, index) in mobiles" :key="index">
+        <div class="grid grid-cols-6 gap-4">
+          <label v-for="(mobile, index) in apiResponse.data" :key="mobile.slug">
             <input
               type="checkbox"
               :id="'mobile' + index"
               name="mobile"
-              :value="mobile"
-              :disabled="selectedMobiles.length >= 3 && !selectedMobiles.includes(mobile)"
+              :value="mobile.slug"
+              :disabled="selectedMobiles.length >= 3 && !selectedMobiles.includes(mobile.slug)"
               v-model="selectedMobiles"
               class="hidden"
             />
-            <label :for="'mobile' + index" class="ml-2 text-white">{{ mobile }}</label>
-          </div>
+            <div class="flex flex-col items-center">
+              <img :src="mobile.image" :alt="mobile.phone_name" class="w-24 h-24 object-contain" />
+              <label :for="'mobile' + index" class="text-white mt-2">{{ mobile.phone_name }}</label>
+            </div>
+          </label>
         </div>
         <p class="mt-4 text-center text-white">คุณเลือก: {{ selectedMobiles.join(', ') }}</p>
         <button
@@ -148,12 +151,7 @@ import SamsungLogo from '../assets/img/logo_samsung.png'
 import VivoLogo from '../assets/img/logo_vivo.png'
 import XiaomiLogo from '../assets/img/logo_xiaomi.png'
 import axios from 'axios'
-import { defineComponent } from "vue"
-interface ApiResponse {
-  id: string;
-  name: string;
-  devices: string[];
-}
+import { defineComponent } from 'vue'
 
 export default {
   data() {
@@ -164,7 +162,6 @@ export default {
         { name: 'Xiaomi', src: XiaomiLogo, value: 'Xiaomi' },
       ],
 
-      mobiles: ['มือถือ01', 'มือถือ02', 'มือถือ03', 'มือถือ04', 'มือถือ05'],
       categories: [
         { label: 'ใช้งานทั่วไป', value: 'general', color: 'bg-gray-500 hover:bg-gray-600' },
         { label: 'เล่นเกม', value: 'game', color: 'bg-gray-500 hover:bg-gray-600' },
@@ -195,7 +192,7 @@ export default {
       ],
       selectedLogos: [] as string[],
       selectedMobiles: [] as string[], // Store selected logo values here
-      apiResponse: null as ApiResponse | null, // To store the response from the API
+      apiResponse: { data: [] }, // To store the response from the API
       selectedCategory: '',
       selectedPrice: { min: 0, max: 1000000 },
       // To store API response data
@@ -211,7 +208,11 @@ export default {
     },
     async fetchBrandDetails() {
       if (this.selectedLogos.length === 0) {
-        this.apiResponse = null;
+        this.apiResponse = { data: [] }
+        return
+      }
+      if (this.selectedCategory.length === 0) {
+        this.apiResponse = { data: [] }
         return
       }
 
@@ -219,26 +220,25 @@ export default {
         const payload = {
           brand: this.selectedLogos, // ส่งค่า selectedLogos,
           category: this.selectedCategory,
-        };
-        const response = await axios.post(
-          'http://13.251.160.30/api/phone/typeofuse',
-          payload,
-          {
-               headers: {
-                 "Content-Type": "application/json",
-               },
-             }
-           )
+        }
+        const response = await axios.post('http://13.251.160.30/api/phone/typeofuse', payload, {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
 
-           this.apiResponse = response.data; // เก็บผลลัพธ์จาก API
-        console.log('API response:', response.data);
+        if (response.data && Array.isArray(response.data.data)) {
+          this.apiResponse = response.data // เก็บข้อมูลทั้งหมดใน apiResponse
+        } else {
+          console.error('Invalid data format:', response.data)
+          alert('ข้อมูลที่ได้รับไม่ถูกต้อง')
+        }
       } catch (error) {
-        console.error('Error fetching brand details:', error);
-        this.apiResponse = null;
-        alert('ไม่สามารถดึงข้อมูลได้. กรุณาลองใหม่อีกครั้ง');
+        console.error('Error fetching brand details:', error)
+        this.apiResponse = { data: [] }
+        alert('ไม่สามารถดึงข้อมูลได้. กรุณาลองใหม่อีกครั้ง')
       }
     },
-  
   },
   // watch: {
   //   selectedLogos(newLogos,) {
@@ -249,15 +249,15 @@ export default {
   //     }
   //   },
   // },
-  watch :{
+  watch: {
     selectedPrice() {
       if (this.selectedPrice.min && this.selectedPrice.max) {
-        this.fetchBrandDetails(); // ดึงข้อมูลเมื่อมีแบรนด์ถูกเลือก
+        this.fetchBrandDetails() // ดึงข้อมูลเมื่อมีแบรนด์ถูกเลือก
       } else {
-        this.apiResponse = null;
+        this.apiResponse = { data: [] }
       }
-    }
-  }
+    },
+  },
 }
 </script>
 
