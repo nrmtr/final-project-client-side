@@ -1,8 +1,8 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
-import axios from 'axios' // Ensure axios is imported
+import axios from 'axios'
 
-interface ApiResponse {
+interface PhoneSpec {
   display: string;
   processor: string;
   ram: string;
@@ -10,11 +10,23 @@ interface ApiResponse {
   battery: string;
 }
 
+interface Phone {
+  name: string;
+  image: string;
+  score: number | null;
+  spec: PhoneSpec;
+}
+
+interface ApiResponse {
+  phones: Phone[]; // Array of phone objects
+  bestPhone: string; // Name of the best phone
+}
+
 export default defineComponent({
   data() {
     return {
       selectedMobiles: [] as string[],
-      apicompare: null as ApiResponse | null, // To store API response data
+      apicompare: null as ApiResponse | null,
     }
   },
   methods: {
@@ -31,8 +43,23 @@ export default defineComponent({
           },
         })
 
-        this.apicompare = response.data // Store API results
-        console.log('API compare:', response.data)
+        // Transform the API response to an array of phones
+        const phones = Object.values(response.data)
+          .filter((item: any) => item.name) // Only keep items that have a 'name' property
+          .map((item: any) => ({
+            name: item.name,
+            image: item.image,
+            score: item.score,
+            spec: item.spec,
+          }))
+
+        // Set the transformed data to apicompare
+        this.apicompare = {
+          phones,
+          bestPhone: response.data.bestPhone,
+        }
+
+        console.log('API compare:', this.apicompare)
       } catch (error) {
         console.error('Error fetching brand details:', error)
         this.apicompare = null
@@ -54,15 +81,13 @@ export default defineComponent({
 
 
 <template>
-  
   <div class="flex justify-center items-center min-h-screen bg-gray-900">
     <div class="bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-4xl">
-      <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
       <h1 class="text-center text-2xl font-bold mb-6">การเปรียบเทียบ</h1>
-      <div v-if="apicompare" class="grid grid-cols-3 gap-4">
+      <div v-if="apicompare && apicompare.phones" class="grid grid-cols-3 gap-4">
         <!-- Dynamic Phone Cards -->
         <div
-          v-for="(phone, index) in Object.values(apicompare).slice(0, 3)"
+          v-for="(phone, index) in apicompare.phones.slice(0, 3)"
           :key="index"
           class="grid gap-2 text-center border p-4 bg-gray-700 rounded-lg text-white border-4 border-white-600 shadow-xl"
         >
@@ -88,32 +113,29 @@ export default defineComponent({
           <button class="bg-blue-500 text-white px-4 py-2 rounded">ดูรายละเอียดเพิ่มเติม</button>
         </div>
       </div>
-      <div v-else>
-        <p class="text-center text-white">กำลังโหลดข้อมูล...</p>
-      </div>
 
       <h1 class="text-center text-2xl font-bold mb-6 mt-8">มือถือที่เราแนะนำให้คุณ</h1>
-      <div v-if="apicompare?.bestPhone" class="grid grid-cols-2 gap-4 mt-4">
+      <div v-if="apicompare?.bestPhone && apicompare.phones" class="grid grid-cols-2 gap-4 mt-4">
         <!-- Recommended Phone -->
         <div class="text-center border p-4">
-          <strong>{{ apicompare[apicompare.bestPhone]?.name }}</strong>
+          <strong>{{ apicompare.phones.find(phone => phone.name === apicompare?.bestPhone)?.name }}</strong>
           <img
-            :src="apicompare[apicompare.bestPhone]?.image"
+            :src="apicompare.phones.find(phone => phone.name === apicompare?.bestPhone)?.image"
             alt="Recommended phone image"
             class="mx-auto rounded-lg w-40 h-40 object-cover mb-4"
           />
         </div>
         <!-- Recommended Phone Details -->
         <div class="grid grid-rows-3 gap-2 text-center border p-4">
-          <div>คะแนนรวม: {{ apicompare[apicompare.bestPhone]?.score }}</div>
+          <div>คะแนนรวม: {{ apicompare.phones.find(phone => phone.name === apicompare?.bestPhone)?.score }}</div>
           <div>
             <strong>รายละเอียด:</strong>
             <ul>
-              <li>หน้าจอ: {{ apicompare[apicompare.bestPhone]?.spec.display }}</li>
-              <li>โปรเซสเซอร์: {{ apicompare[apicompare.bestPhone]?.spec.processor }}</li>
-              <li>แรม: {{ apicompare[apicompare.bestPhone]?.spec.ram }}</li>
-              <li>กล้อง: {{ apicompare[apicompare.bestPhone]?.spec.camera }}</li>
-              <li>แบตเตอรี่: {{ apicompare[apicompare.bestPhone]?.spec.battery }}</li>
+              <li>หน้าจอ: {{ apicompare.phones.find(phone => phone.name === apicompare?.bestPhone)?.spec.display }}</li>
+              <li>โปรเซสเซอร์: {{ apicompare.phones.find(phone => phone.name === apicompare?.bestPhone)?.spec.processor }}</li>
+              <li>แรม: {{ apicompare.phones.find(phone => phone.name === apicompare?.bestPhone)?.spec.ram }}</li>
+              <li>กล้อง: {{ apicompare.phones.find(phone => phone.name === apicompare?.bestPhone)?.spec.camera }}</li>
+              <li>แบตเตอรี่: {{ apicompare.phones.find(phone => phone.name === apicompare?.bestPhone)?.spec.battery }}</li>
             </ul>
           </div>
           <button class="bg-green-500 text-white px-4 py-2 rounded">ดูรายละเอียดเพิ่มเติม</button>
@@ -125,6 +147,8 @@ export default defineComponent({
     </div>
   </div>
 </template>
+
+
 
 
 <style>
