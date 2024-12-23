@@ -153,6 +153,11 @@ import XiaomiLogo from '../assets/img/logo_xiaomi.png'
 import axios from 'axios'
 import { defineComponent } from 'vue'
 
+interface Mobile {
+  slug: string;
+  image: string;
+  phone_name: string;
+}
 export default {
   data() {
     return {
@@ -192,7 +197,7 @@ export default {
       ],
       selectedLogos: [] as string[],
       selectedMobiles: [] as string[], // Store selected logo values here
-      apiResponse: { data: [] }, // To store the response from the API
+      apiResponse: { data: [] as Mobile[] }, // To store the response from the API
       selectedCategory: '',
       selectedPrice: { min: 0, max: 1000000 },
       // To store API response data
