@@ -149,6 +149,7 @@ import VivoLogo from '../assets/img/logo_vivo.png'
 import XiaomiLogo from '../assets/img/logo_xiaomi.png'
 import axios from 'axios'
 import { defineComponent } from "vue"
+
 interface ApiResponse {
   id: string;
   name: string;
