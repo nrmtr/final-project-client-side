@@ -1,25 +1,197 @@
+<template>
+  <div class="flex justify-center items-center min-h-screen bg-gray-900">
+    <div class="bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-4xl">
+      <br /><br />
+      <h1 class="text-center text-2xl font-bold mb-6">การเปรียบเทียบ</h1>
+      <div v-if="apicompare && apicompare.phones" class="grid grid-cols-3 gap-4">
+        <!-- Dynamic Phone Cards -->
+        <div
+          v-for="(phone, index) in apicompare.phones.slice(0, 3)"
+          :key="index"
+          class="grid gap-2 text-center border p-4 bg-gray-700 rounded-lg text-white border-4 border-white-600 shadow-xl"
+        >
+          <div>{{ phone.name }}</div>
+          <div>
+            <img
+              :src="phone.image"
+              alt="Phone image"
+              class="mx-auto rounded-lg w-32 h-44 object-cover"
+            />
+          </div>
+          <div>
+            <strong>รายละเอียด:</strong>
+            <ul>
+              <li>
+                <span
+                  :style="{
+                    color:
+                      phone.specifications_score.display === maxScores.display ? 'green' : 'white',
+                  }"
+                >
+                  หน้าจอ: {{ phone.spec.display }}
+                </span>
+              </li>
+              <li>
+                <span
+                  :style="{
+                    color:
+                      phone.specifications_score.processor === maxScores.processor
+                        ? 'green'
+                        : 'white',
+                  }"
+                >
+                  โปรเซสเซอร์: {{ phone.spec.processor }}
+                </span>
+              </li>
+              <li>
+                <span
+                  :style="{
+                    color: phone.specifications_score.ram === maxScores.ram ? 'green' : 'white',
+                  }"
+                >
+                  แรม: {{ phone.spec.ram }}
+                </span>
+              </li>
+              <li>
+                <span
+                  :style="{
+                    color:
+                      phone.specifications_score.camera === maxScores.camera ? 'green' : 'white',
+                  }"
+                >
+                  กล้อง: {{ phone.spec.camera }}
+                </span>
+              </li>
+              <li>
+                <span
+                  :style="{
+                    color:
+                      phone.specifications_score.battery === maxScores.battery ? 'green' : 'white',
+                  }"
+                >
+                  แบตเตอรี่: {{ phone.spec.battery }}
+                </span>
+              </li>
+              <!-- <li>
+                <span
+                  :style="{
+                    color: phone.specifications_score.price === maxScores.price ? 'green' : 'white',
+                  }"
+                >
+                  ราคา: {{ phone.specifications_score.price }}
+                </span>
+              </li> -->
+            </ul>
+          </div>
+          <div
+            :style="{
+              color: phone.score === maxTotalScore ? 'green' : 'white',
+            }"
+          >
+            คะแนนรวม: {{ phone.score }}
+          </div>
+          <button class="bg-blue-500 text-white px-4 py-2 rounded">ดูรายละเอียดเพิ่มเติม</button>
+        </div>
+      </div>
+
+      <h1 class="text-center text-2xl font-bold mb-6 mt-8">มือถือที่เราแนะนำให้คุณ</h1>
+      <div v-if="apicompare?.bestPhone && apicompare.phones" class="grid grid-cols-2 gap-4 mt-4">
+        <!-- Recommended Phone -->
+        <div class="text-center border p-4">
+          <strong>{{
+            apicompare.phones.find((phone) => phone.name === apicompare?.bestPhone)?.name
+          }}</strong>
+          <img
+            :src="apicompare.phones.find((phone) => phone.name === apicompare?.bestPhone)?.image"
+            alt="Recommended phone image"
+            class="mx-auto rounded-lg w-40 h-54 object-cover mb-4"
+          />
+        </div>
+        <!-- Recommended Phone Details -->
+        <div class="grid grid-rows-3 gap-2 text-center border p-4">
+          <div>
+            คะแนนรวม:
+            {{ apicompare.phones.find((phone) => phone.name === apicompare?.bestPhone)?.score }}
+          </div>
+          <div>
+            <strong>รายละเอียด:</strong>
+            <ul>
+              <li>
+                หน้าจอ:
+                {{
+                  apicompare.phones.find((phone) => phone.name === apicompare?.bestPhone)?.spec
+                    .display
+                }}
+              </li>
+              <li>
+                โปรเซสเซอร์:
+                {{
+                  apicompare.phones.find((phone) => phone.name === apicompare?.bestPhone)?.spec
+                    .processor
+                }}
+              </li>
+              <li>
+                แรม:
+                {{
+                  apicompare.phones.find((phone) => phone.name === apicompare?.bestPhone)?.spec.ram
+                }}
+              </li>
+              <li>
+                กล้อง:
+                {{
+                  apicompare.phones.find((phone) => phone.name === apicompare?.bestPhone)?.spec
+                    .camera
+                }}
+              </li>
+              <li>
+                แบตเตอรี่:
+                {{
+                  apicompare.phones.find((phone) => phone.name === apicompare?.bestPhone)?.spec
+                    .battery
+                }}
+              </li>
+            </ul>
+          </div>
+          <button class="bg-green-500 text-white px-4 py-2 rounded">ดูรายละเอียดเพิ่มเติม</button>
+        </div>
+      </div>
+      <div v-else>
+        <p class="text-center text-white">ไม่มีมือถือแนะนำในขณะนี้</p>
+      </div>
+    </div>
+  </div>
+</template>
+
 <script lang="ts">
 import { defineComponent } from 'vue'
 import axios from 'axios'
 
 interface PhoneSpec {
-  display: string;
-  processor: string;
-  ram: string;
-  camera: string;
-  battery: string;
+  display: string
+  processor: string
+  ram: string
+  camera: string
+  battery: string
 }
-
+interface PhoneSpecScore {
+  display: number | null
+  processor: number | null
+  ram: number | null
+  camera: number | null
+  battery: number | null
+  price: number | null
+}
 interface Phone {
-  name: string;
-  image: string;
-  score: number | null;
-  spec: PhoneSpec;
+  name: string
+  image: string
+  score: number | null
+  spec: PhoneSpec
+  specifications_score: PhoneSpecScore
 }
 
 interface ApiResponse {
-  phones: Phone[]; // Array of phone objects
-  bestPhone: string; // Name of the best phone
+  phones: Phone[] // Array of phone objects
+  bestPhone: string // Name of the best phone
 }
 
 export default defineComponent({
@@ -28,6 +200,33 @@ export default defineComponent({
       selectedMobiles: [] as string[],
       apicompare: null as ApiResponse | null,
     }
+  },
+  computed: {
+    maxScores(): Record<string, number | null> {
+      if (!this.apicompare || !this.apicompare.phones) return {}
+
+      const keys = ['display', 'processor', 'ram', 'camera', 'battery', 'price']
+      const maxScores: Record<string, number | null> = {}
+
+      keys.forEach((key) => {
+        const scores = this.apicompare!.phones.map(
+          (phone) => phone.specifications_score[key as keyof PhoneSpecScore]
+        ).filter((score): score is number => score !== null) // กรอง null ออก
+
+        maxScores[key] = scores.length ? Math.max(...scores) : null
+      })
+
+      return maxScores
+    },
+    maxTotalScore(): number | null {
+      if (!this.apicompare || !this.apicompare.phones) return null
+
+      const scores = this.apicompare.phones
+        .map((phone) => phone.score)
+        .filter((score): score is number => score !== null) // กรอง null ออก
+
+      return scores.length ? Math.max(...scores) : null
+    },
   },
   methods: {
     async fetchcompare() {
@@ -51,6 +250,7 @@ export default defineComponent({
             image: item.image,
             score: item.score,
             spec: item.spec,
+            specifications_score: item.specifications_score,
           }))
 
         // Set the transformed data to apicompare
@@ -78,79 +278,6 @@ export default defineComponent({
   },
 })
 </script>
-
-
-<template>
-  <div class="flex justify-center items-center min-h-screen bg-gray-900">
-    <div class="bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-4xl">
-      <br><br>
-      <h1 class="text-center text-2xl font-bold mb-6">การเปรียบเทียบ</h1>
-      <div v-if="apicompare && apicompare.phones" class="grid grid-cols-3 gap-4">
-        <!-- Dynamic Phone Cards -->
-        <div
-          v-for="(phone, index) in apicompare.phones.slice(0, 3)"
-          :key="index"
-          class="grid gap-2 text-center border p-4 bg-gray-700 rounded-lg text-white border-4 border-white-600 shadow-xl"
-        >
-          <div>{{ phone.name }}</div>
-          <div>
-            <img
-              :src="phone.image"
-              alt="Phone image"
-              class="mx-auto rounded-lg w-32 h-44 object-cover"
-            />
-          </div>
-          <div>
-            <strong>รายละเอียด:</strong>
-            <ul>
-              <li>หน้าจอ: {{ phone.spec.display }}</li>
-              <li>โปรเซสเซอร์: {{ phone.spec.processor }}</li>
-              <li>แรม: {{ phone.spec.ram }}</li>
-              <li>กล้อง: {{ phone.spec.camera }}</li>
-              <li>แบตเตอรี่: {{ phone.spec.battery }}</li>
-            </ul>
-          </div>
-          <div>คะแนนรวม: {{ phone.score }}</div>
-          <button class="bg-blue-500 text-white px-4 py-2 rounded">ดูรายละเอียดเพิ่มเติม</button>
-        </div>
-      </div>
-
-      <h1 class="text-center text-2xl font-bold mb-6 mt-8">มือถือที่เราแนะนำให้คุณ</h1>
-      <div v-if="apicompare?.bestPhone && apicompare.phones" class="grid grid-cols-2 gap-4 mt-4">
-        <!-- Recommended Phone -->
-        <div class="text-center border p-4">
-          <strong>{{ apicompare.phones.find(phone => phone.name === apicompare?.bestPhone)?.name }}</strong>
-          <img
-            :src="apicompare.phones.find(phone => phone.name === apicompare?.bestPhone)?.image"
-            alt="Recommended phone image"
-            class="mx-auto rounded-lg w-40 h-54 object-cover mb-4"
-          />
-        </div>
-        <!-- Recommended Phone Details -->
-        <div class="grid grid-rows-3 gap-2 text-center border p-4">
-          <div>คะแนนรวม: {{ apicompare.phones.find(phone => phone.name === apicompare?.bestPhone)?.score }}</div>
-          <div>
-            <strong>รายละเอียด:</strong>
-            <ul>
-              <li>หน้าจอ: {{ apicompare.phones.find(phone => phone.name === apicompare?.bestPhone)?.spec.display }}</li>
-              <li>โปรเซสเซอร์: {{ apicompare.phones.find(phone => phone.name === apicompare?.bestPhone)?.spec.processor }}</li>
-              <li>แรม: {{ apicompare.phones.find(phone => phone.name === apicompare?.bestPhone)?.spec.ram }}</li>
-              <li>กล้อง: {{ apicompare.phones.find(phone => phone.name === apicompare?.bestPhone)?.spec.camera }}</li>
-              <li>แบตเตอรี่: {{ apicompare.phones.find(phone => phone.name === apicompare?.bestPhone)?.spec.battery }}</li>
-            </ul>
-          </div>
-          <button class="bg-green-500 text-white px-4 py-2 rounded">ดูรายละเอียดเพิ่มเติม</button>
-        </div>
-      </div>
-      <div v-else>
-        <p class="text-center text-white">ไม่มีมือถือแนะนำในขณะนี้</p>
-      </div>
-    </div>
-  </div>
-</template>
-
-
-
 
 <style>
 .bg-gray-900 {

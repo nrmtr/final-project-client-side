@@ -7,7 +7,12 @@
       <fieldset class="mb-6">
         <legend class="text-lg font-semibold mb-2 text-center text-white">แบรนด์</legend>
         <div class="grid grid-cols-3 gap-4 place-items-center">
-          <label v-for="(logo, index) in logos" :key="index" class="cursor-pointer">
+          <label
+            v-for="(logo, index) in logos"
+            :key="index"
+            class="cursor-pointer"
+            :class="selectedLogos.includes(logo.value) ? 'border-4 border-green-500' : 'border-0'"
+          >
             <input type="checkbox" v-model="selectedLogos" :value="logo.value" class="hidden" />
             <img
               :src="logo.src"
@@ -16,42 +21,18 @@
             />
           </label>
         </div>
-        <!-- Display selected logos in a box with clear visibility -->
-        <div v-if="selectedLogos.length > 0" class="mt-4 text-center">
-          <div class="bg-gray-700 p-4 rounded-lg text-white border-4 border-black-600 shadow-xl">
-            <strong>คุณเลือกแบรนด์:</strong>
-            <div class="flex flex-wrap justify-center mt-2">
-              <span
-                v-for="(logo, index) in selectedLogos"
-                :key="index"
-                class="bg-gray-600 text-white p-2 rounded-lg m-1"
-              >
-                {{ logo }}
-              </span>
-            </div>
-          </div>
-        </div>
-        <!-- <button
-          @click="fetchBrandDetails"
-          class="block mx-auto mt-4 bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition-colors"
-        >
-          ดึงข้อมูลแบรนด์ที่เลือก
-        </button> -->
-        <!--  for api -->
-        <!-- <div v-if="apiResponse" class="mt-4 text-center">
-          <div class="bg-gray-700 p-4 rounded-lg text-white border-4 border-gray-600 shadow-xl">
-            <strong>ข้อมูลแบรนด์:</strong>
-            <p v-if="apiResponse">ID: {{ apiResponse.id }}</p>
-            <p v-if="apiResponse">Name: {{ apiResponse.name }}</p>
-            <p v-if="apiResponse">Devices: {{ apiResponse.devices }}</p>
-          </div>
-        </div> -->
       </fieldset>
+
       <!-- ประเภทการใช้งาน -->
       <fieldset class="mb-6">
         <legend class="text-lg font-semibold mb-2 text-center text-white">ประเภทการใช้งาน</legend>
         <div class="grid grid-cols-3 gap-2">
-          <label v-for="category in categories" :key="category.value">
+          <label
+            v-for="category in categories"
+            :key="category.value"
+            class="cursor-pointer"
+            :class="selectedCategory === category.value ? 'border-4 border-green-500' : 'border-0'"
+          >
             <input
               type="radio"
               name="category"
@@ -61,21 +42,11 @@
             />
             <span
               class="block text-center p-2 rounded cursor-pointer text-white"
-              :class="category.color"
+              :class="[category.color, selectedCategory === category.value ? 'bg-green-500' : '']"
             >
               {{ category.label }}
             </span>
           </label>
-        </div>
-        <div v-if="selectedCategory" class="mt-4 text-center">
-          <div class="bg-gray-700 p-4 rounded-lg text-white border-4 border-white-600 shadow-xl">
-            <strong>ประเภทการใช้งานที่เลือก:</strong>
-            <div class="flex justify-center mt-2">
-              <span class="bg-gray-600 text-white p-2 rounded-lg m-1">
-                {{ selectedCategory }}
-              </span>
-            </div>
-          </div>
         </div>
       </fieldset>
 
@@ -83,7 +54,16 @@
       <fieldset class="mb-6">
         <legend class="text-lg font-semibold mb-2 text-center text-white">ระดับราคา</legend>
         <div class="grid grid-cols-3 gap-2">
-          <label v-for="price in prices" :key="price.min">
+          <label
+            v-for="price in prices"
+            :key="price.min"
+            class="cursor-pointer"
+            :class="
+              selectedPrice.min === price.min && selectedPrice.max === price.max
+                ? 'border-4 border-green-500'
+                : 'border-0'
+            "
+          >
             <input
               type="radio"
               name="Price"
@@ -93,22 +73,17 @@
             />
             <span
               class="block text-center p-2 rounded cursor-pointer text-white"
-              :class="price.color"
+              :class="[
+                price.color,
+                selectedPrice.min === price.min && selectedPrice.max === price.max
+                  ? 'bg-green-500'
+                  : '',
+              ]"
               style="white-space: pre-line"
             >
               {{ price.label }}
             </span>
           </label>
-        </div>
-        <div v-if="selectedPrice.min && selectedPrice.max" class="mt-4 text-center">
-          <div class="bg-gray-700 p-4 rounded-lg text-white border-4 border-white-600 shadow-xl">
-            <strong>ช่วงราคาที่เลือก:</strong>
-            <div class="flex justify-center mt-2">
-              <span class="bg-gray-600 text-white px-4 py-2 rounded-lg">
-                {{ selectedPrice.min }} - {{ selectedPrice.max }}
-              </span>
-            </div>
-          </div>
         </div>
       </fieldset>
 
@@ -117,24 +92,39 @@
         <legend class="text-lg font-semibold mb-2 text-center text-white">
           เลือก 3 รุ่น เพื่อเปรียบเทียบ
         </legend>
-        <div class="grid grid-cols-6 gap-4">
-          <label v-for="(mobile, index) in apiResponse.data" :key="mobile.slug">
-            <input
-              type="checkbox"
-              :id="'mobile' + index"
-              name="mobile"
-              :value="mobile.slug"
-              :disabled="selectedMobiles.length >= 3 && !selectedMobiles.includes(mobile.slug)"
-              v-model="selectedMobiles"
-              class="hidden"
-            />
-            <div class="flex flex-col items-center">
-              <img :src="mobile.image" :alt="mobile.phone_name" class="w-24 h-24 object-contain" />
-              <label :for="'mobile' + index" class="text-white mt-2">{{ mobile.phone_name }}</label>
-            </div>
-          </label>
+        <div class="overflow-x-auto">
+          <div
+            class="flex flex-wrap gap-4 justify-start"
+            style="max-height: calc(5 * 8rem); width: 100%"
+          >
+            <label
+              v-for="(mobile, index) in apiResponse.data"
+              :key="mobile.slug"
+              class="flex flex-col items-center w-1/6"
+              :class="selectedMobiles.includes(mobile.slug) ? 'border-4 border-green-500' : ''"
+            >
+              <input
+                type="checkbox"
+                :id="'mobile' + index"
+                name="mobile"
+                :value="mobile.slug"
+                :disabled="selectedMobiles.length >= 3 && !selectedMobiles.includes(mobile.slug)"
+                v-model="selectedMobiles"
+                class="hidden"
+              />
+              <div class="flex flex-col items-center">
+                <img
+                  :src="mobile.image"
+                  :alt="mobile.phone_name"
+                  class="w-24 h-24 object-contain"
+                />
+                <label :for="'mobile' + index" class="text-white mt-2 text-center">
+                  {{ mobile.phone_name }}
+                </label>
+              </div>
+            </label>
+          </div>
         </div>
-        <p class="mt-4 text-center text-white">คุณเลือก: {{ selectedMobiles.join(', ') }}</p>
         <button
           @click="compare"
           class="block mx-auto mt-4 bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition-colors"
@@ -154,9 +144,9 @@ import axios from 'axios'
 import { defineComponent } from 'vue'
 
 interface Mobile {
-  slug: string;
-  image: string;
-  phone_name: string;
+  slug: string
+  image: string
+  phone_name: string
 }
 export default {
   data() {
@@ -209,10 +199,10 @@ export default {
         alert('กรุณาเลือก 3 รุ่นเพื่อเปรียบเทียบ')
       } else {
         this.$router.push({
-        name: 'compare',
-        query: { mobiles: JSON.stringify(this.selectedMobiles) },
-      })
-    }
+          name: 'compare',
+          query: { mobiles: JSON.stringify(this.selectedMobiles) },
+        })
+      }
     },
     async fetchBrandDetails() {
       if (this.selectedLogos.length === 0) {
