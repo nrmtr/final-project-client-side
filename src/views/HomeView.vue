@@ -6,7 +6,7 @@
       <!-- แบรนด์ -->
       <fieldset class="mb-6">
         <legend class="text-lg font-semibold mb-2 text-center text-white">แบรนด์</legend>
-        <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 place-items-center">
+        <div class="grid grid-cols-3 sm:grid-cols-9 gap-4 place-items-center">
           <label
             v-for="(logo, index) in logos"
             :key="index"
@@ -142,6 +142,12 @@
 import SamsungLogo from '../assets/img/logo_samsung.png'
 import VivoLogo from '../assets/img/logo_vivo.png'
 import XiaomiLogo from '../assets/img/logo_xiaomi.png'
+import AppleLogo from '../assets/img/logo_apple.png'
+import HonorLogo from '../assets/img/logo_honor.png'
+import HuaweiLogo from '../assets/img/logo_huawei.png'
+import OneplusLogo from '../assets/img/logo_oneplus.png'
+import OppoLogo from '../assets/img/logo_oppo.png'
+import RealmeLogo from '../assets/img/logo_realme.png'
 import axios from 'axios'
 import { defineComponent } from 'vue'
 
@@ -163,6 +169,12 @@ export default {
         { name: 'Samsung', src: SamsungLogo, value: 'Samsung' },
         { name: 'Vivo', src: VivoLogo, value: 'Vivo' },
         { name: 'Xiaomi', src: XiaomiLogo, value: 'Xiaomi' },
+        { name: 'Apple', src: AppleLogo, value: 'Apple' },
+        { name: 'Honor', src: HonorLogo, value: 'Honor' },
+        { name: 'Huawei', src: HuaweiLogo, value: 'Huawei' },
+        { name: 'Oneplus', src: OneplusLogo, value: 'Oneplus' },
+        { name: 'Oppo', src: OppoLogo, value: 'Oppo' },
+        { name: 'Realme', src: RealmeLogo, value: 'Realme' },
       ],
 
       categories: [

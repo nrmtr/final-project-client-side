@@ -102,9 +102,18 @@ onBeforeUnmount(() => {
   overflow: auto; /* Prevent overflow issues */
 }
 
-@media (max-width: 768px) {
-  .content {
-    padding: 0.5rem; /* Adjust padding for smaller screens */
-  }
+@media (min-width: 1024px) {
+  .layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Ensure it covers the full screen */
+}
+
+.content {
+  flex: 1; /* Flexible content area */
+  margin-top: 4rem; /* Leave space for the Navbar */
+  padding: 1rem; /* Add some padding */
+  overflow: auto; /* Prevent overflow issues */
+}
 }
 </style>
