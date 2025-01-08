@@ -1,12 +1,12 @@
 <template>
-  <div class="flex justify-center items-center min-h-screen bg-gray-900">
+  <div class="flex justify-center items-center min-h-screen bg-gray-900 p-4">
     <div class="bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-4xl">
       <h1 class="text-center text-2xl font-bold mb-6 text-white">เลือกหัวข้อที่ต้องการ</h1>
 
       <!-- แบรนด์ -->
       <fieldset class="mb-6">
         <legend class="text-lg font-semibold mb-2 text-center text-white">แบรนด์</legend>
-        <div class="grid grid-cols-3 gap-4 place-items-center">
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 place-items-center">
           <label
             v-for="(logo, index) in logos"
             :key="index"
@@ -17,7 +17,7 @@
             <img
               :src="logo.src"
               :alt="logo.name"
-              class="w-24 h-24 object-contain hover:opacity-75 transition-opacity duration-300"
+              class="w-16 h-16 sm:w-24 sm:h-24 object-contain hover:opacity-75 transition-opacity duration-300"
             />
           </label>
         </div>
@@ -26,7 +26,7 @@
       <!-- ประเภทการใช้งาน -->
       <fieldset class="mb-6">
         <legend class="text-lg font-semibold mb-2 text-center text-white">ประเภทการใช้งาน</legend>
-        <div class="grid grid-cols-3 gap-2">
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
           <label
             v-for="category in categories"
             :key="category.value"
@@ -53,7 +53,7 @@
       <!-- ระดับราคา -->
       <fieldset class="mb-6">
         <legend class="text-lg font-semibold mb-2 text-center text-white">ระดับราคา</legend>
-        <div class="grid grid-cols-3 gap-2">
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
           <label
             v-for="price in prices"
             :key="price.min"
@@ -70,6 +70,7 @@
               v-model="selectedPrice"
               :value="price"
               class="hidden"
+              @click="togglePrice(price)"
             />
             <span
               class="block text-center p-2 rounded cursor-pointer text-white"
@@ -95,12 +96,12 @@
         <div class="overflow-x-auto">
           <div
             class="flex flex-wrap gap-4 justify-start"
-            style="max-height: calc(5 * 8rem); width: 100%"
+            style="max-height: calc(5 * 5rem); width: 100%"
           >
             <label
               v-for="(mobile, index) in apiResponse.data"
               :key="mobile.slug"
-              class="flex flex-col items-center w-1/6"
+              class="flex flex-col items-center w-1/3 sm:w-1/4 md:w-1/6"
               :class="selectedMobiles.includes(mobile.slug) ? 'border-4 border-green-500' : ''"
             >
               <input
@@ -116,7 +117,7 @@
                 <img
                   :src="mobile.image"
                   :alt="mobile.phone_name"
-                  class="w-24 h-24 object-contain"
+                  class="w-16 h-16 sm:w-24 sm:h-24 object-contain"
                 />
                 <label :for="'mobile' + index" class="text-white mt-2 text-center">
                   {{ mobile.phone_name }}
@@ -136,6 +137,7 @@
   </div>
 </template>
 
+
 <script lang="ts">
 import SamsungLogo from '../assets/img/logo_samsung.png'
 import VivoLogo from '../assets/img/logo_vivo.png'
@@ -147,6 +149,12 @@ interface Mobile {
   slug: string
   image: string
   phone_name: string
+}
+interface Price {
+  label: string
+  min: number
+  max: number
+  color: string
 }
 export default {
   data() {
@@ -184,16 +192,30 @@ export default {
           max: 1000000,
           color: 'bg-gray-500 hover:bg-gray-600',
         },
-      ],
+      ] as Price[],
       selectedLogos: [] as string[],
       selectedMobiles: [] as string[], // Store selected logo values here
       apiResponse: { data: [] as Mobile[] }, // To store the response from the API
       selectedCategory: '',
-      selectedPrice: { min: 0, max: 1000000 },
+      selectedPrice: { min: 0, max: 1000000 } as Price,
       // To store API response data
     }
   },
   methods: {
+    togglePrice(price: Price) {
+      if (this.selectedPrice.min === price.min && this.selectedPrice.max === price.max) {
+        // Reset selection with default values
+        this.selectedPrice = {
+          label: 'ค่าเริ่มต้น',
+          min: 0,
+          max: 1000000,
+          color: 'bg-gray-500',
+        }
+      } else {
+        // Set new selection
+        this.selectedPrice = price
+      }
+    },
     compare() {
       if (this.selectedMobiles.length !== 3) {
         alert('กรุณาเลือก 3 รุ่นเพื่อเปรียบเทียบ')
@@ -238,15 +260,7 @@ export default {
       }
     },
   },
-  // watch: {
-  //   selectedLogos(newLogos,) {
-  //     if (newLogos.length > 0) {
-  //       this.fetchBrandDetails(); // ดึงข้อมูลเมื่อมีแบรนด์ถูกเลือก
-  //     } else {
-  //       this.apiResponse = null; // ล้างข้อมูลเมื่อไม่มีแบรนด์ถูกเลือก
-  //     }
-  //   },
-  // },
+
   watch: {
     selectedPrice() {
       if (this.selectedPrice.min && this.selectedPrice.max) {

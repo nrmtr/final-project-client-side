@@ -1,25 +1,6 @@
-<script setup>
-import { ref } from 'vue'
-import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'
-import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline'
-import { RouterLink, RouterView } from 'vue-router'
-
-const navigation = ref([
-  { name: 'Home', href: '/', current: true },
-  { name: 'Comparison', href: '/compare' },
-])
-
-const updateCurrent = (selectedName) => {
-  navigation.value = navigation.value.map((item) => ({
-    ...item,
-    current: item.name === selectedName,
-  }))
-}
-</script>
-
 <template>
   <div>
-    <div class="container">
+    <div class="layout">
       <Disclosure as="nav" class="bg-gray-800 fixed top-0 left-0 w-full z-50" v-slot="{ open }">
         <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
           <div class="relative flex h-16 items-center justify-between">
@@ -40,12 +21,7 @@ const updateCurrent = (selectedName) => {
                     v-for="item in navigation"
                     :key="item.name"
                     :to="item.href"
-                    :class="[
-                      item.current
-                        ? 'bg-gray-900 text-white'
-                        : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                      'rounded-md px-3 py-2 text-sm font-medium',
-                    ]"
+                    :class="[item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white', 'rounded-md px-3 py-2 text-sm font-medium']"
                     :aria-current="item.current ? 'page' : undefined"
                     @click="updateCurrent(item.name)"
                   >
@@ -62,12 +38,7 @@ const updateCurrent = (selectedName) => {
               v-for="item in navigation"
               :key="item.name"
               :to="item.href"
-              :class="[
-                item.current
-                  ? 'bg-gray-900 text-white'
-                  : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                'block rounded-md px-3 py-2 text-base font-medium',
-              ]"
+              :class="[item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white', 'block rounded-md px-3 py-2 text-base font-medium']"
               :aria-current="item.current ? 'page' : undefined"
               @click="updateCurrent(item.name)"
             >
@@ -76,19 +47,64 @@ const updateCurrent = (selectedName) => {
           </div>
         </DisclosurePanel>
       </Disclosure>
-    </div>
-    <div>
-      <RouterView />
+      <div class="content">
+        <RouterView />
+      </div>
     </div>
   </div>
 </template>
 
+<script setup>
+import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue';
+import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline';
+import { RouterLink, RouterView } from 'vue-router';
+
+const navigation = ref([
+  { name: 'Home', href: '/', current: true },
+]);
+
+const updateCurrent = (selectedName) => {
+  navigation.value = navigation.value.map((item) => ({
+    ...item,
+    current: item.name === selectedName,
+  }));
+};
+
+onMounted(() => {
+  const handleResize = () => {
+    const content = document.querySelector('.content');
+    if (content) {
+      content.style.minHeight = `${window.innerHeight - 64}px`; // Adjust height dynamically
+    }
+  };
+
+  window.addEventListener('resize', handleResize);
+  handleResize(); // Set on initial load
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', handleResize);
+});
+</script>
+
 <style>
-.container {
+.layout {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 50vh;
+  flex-direction: column;
+  min-height: 100vh; /* Ensure it covers the full screen */
 }
 
+.content {
+  flex: 1; /* Flexible content area */
+  margin-top: 4rem; /* Leave space for the Navbar */
+  padding: 1rem; /* Add some padding */
+  overflow: auto; /* Prevent overflow issues */
+}
+
+@media (max-width: 768px) {
+  .content {
+    padding: 0.5rem; /* Adjust padding for smaller screens */
+  }
+}
 </style>
