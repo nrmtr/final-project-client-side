@@ -47,7 +47,7 @@
           </div>
         </DisclosurePanel>
       </Disclosure>
-      <div class="content">
+      <div class="content fixed left-0 w-full h-full">
         <RouterView />
       </div>
     </div>
@@ -71,49 +71,26 @@ const updateCurrent = (selectedName) => {
   }));
 };
 
-onMounted(() => {
-  const handleResize = () => {
-    const content = document.querySelector('.content');
-    if (content) {
-      content.style.minHeight = `${window.innerHeight - 64}px`; // Adjust height dynamically
-    }
-  };
-
-  window.addEventListener('resize', handleResize);
-  handleResize(); // Set on initial load
-});
-
-onBeforeUnmount(() => {
-  window.removeEventListener('resize', handleResize);
-});
 </script>
 
 <style>
+body {
+  margin: 0; /* ปิด margin ของ body เพื่อไม่ให้เกิด Scrollbar */
+  overflow: hidden; /* ปิด Scrollbar หลัก */
+}
+
 .layout {
   display: flex;
   flex-direction: column;
-  min-height: 100vh; /* Ensure it covers the full screen */
+  height: 100vh; /* ใช้ความสูงเต็มหน้าจอ */
+  overflow: hidden; /* ป้องกัน Scrollbar ซ้ำซ้อน */
 }
 
 .content {
-  flex: 1; /* Flexible content area */
-  margin-top: 4rem; /* Leave space for the Navbar */
-  padding: 1rem; /* Add some padding */
-  overflow: auto; /* Prevent overflow issues */
-}
-
-@media (min-width: 1024px) {
-  .layout {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh; /* Ensure it covers the full screen */
-}
-
-.content {
-  flex: 1; /* Flexible content area */
-  margin-top: 4rem; /* Leave space for the Navbar */
-  padding: 1rem; /* Add some padding */
-  overflow: auto; /* Prevent overflow issues */
-}
+  flex: 1; /* ให้พื้นที่เหลือของ Layout เป็นของ Content */
+  margin-top: 4rem; /* ระยะเผื่อสำหรับ Navbar */
+  padding: 1rem; /* เพิ่ม padding สำหรับ Content */
+  padding-bottom: 4rem; /* เพิ่มพื้นที่ด้านล่าง */
+  overflow-y: auto; /* เปิด Scrollbar แค่ในเนื้อหา */
 }
 </style>
