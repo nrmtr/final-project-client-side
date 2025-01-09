@@ -239,19 +239,15 @@ export default {
       }
     },
     async fetchBrandDetails() {
-      if (this.selectedLogos.length === 0) {
-        this.apiResponse = { data: [] }
-        return
-      }
-      if (this.selectedCategory.length === 0) {
+      if (this.selectedLogos.length === 0 || this.selectedCategory.length === 0) {
         this.apiResponse = { data: [] }
         return
       }
 
       try {
         const payload = {
-          brand: this.selectedLogos, // ส่งค่า selectedLogos,
-          category: this.selectedCategory,
+          brand: this.selectedLogos, // ส่งค่าที่เลือก
+          category: this.selectedCategory, // ส่งประเภทการใช้งานที่เลือก
         }
         const response = await axios.post('http://13.251.160.30/api/phone/typeofuse', payload, {
           headers: {
@@ -260,7 +256,7 @@ export default {
         })
 
         if (response.data && Array.isArray(response.data.data)) {
-          this.apiResponse = response.data // เก็บข้อมูลทั้งหมดใน apiResponse
+          this.apiResponse = response.data // เก็บข้อมูล API
         } else {
           console.error('Invalid data format:', response.data)
           alert('ข้อมูลที่ได้รับไม่ถูกต้อง')
@@ -280,6 +276,12 @@ export default {
       } else {
         this.apiResponse = { data: [] }
       }
+    },
+    selectedLogos() {
+      this.fetchBrandDetails()
+    },
+    selectedCategory() {
+      this.fetchBrandDetails()
     },
   },
 }
