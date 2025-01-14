@@ -109,8 +109,8 @@
         v-if="apicompare?.bestPhone && apicompare.phones"
         class="grid grid-cols-1 sm:grid-cols-2 gap-6"
       >
-        <div class="custom-font text-center bg-gray-300 border-2 border-primary p-4 rounded-lg">
-          <h2 class="font-bold text-lg">
+        <div class="custom-font text-dark text-center bg-gray-300 border-2 border-primary p-4 rounded-lg">
+          <h2 class="font-bold text-lg text-dark">
             {{ apicompare.phones.find((phone) => phone.name === apicompare?.bestPhone)?.name }}
           </h2>
           <img
@@ -121,9 +121,9 @@
         </div>
         <div class="bg-gray-300 border-2 border-primary p-4 rounded-lg">
   <!-- คะแนนรวม -->
-  <div class="mb-4 custom-font">
+  <div class="mb-4 custom-font text-dark">
     <strong>คะแนนรวม</strong>
-    <li class="p-2 rounded-lg mt-2 bg-light">
+    <li class="p-2 rounded-lg mt-2 bg-light text-dark">
       {{
       apicompare.phones.find((phone) => phone.name === apicompare?.bestPhone)?.score
     }}
@@ -132,13 +132,13 @@
   </div>
 
   <!-- รายละเอียด -->
-  <ul class="text-sm mt-4 custom-font">
+  <ul class="text-sm mt-4 custom-font text-dark">
     <li>
       <strong>รายละเอียด:</strong>
     </li>
 
     <!-- หน้าจอ -->
-    <li class="p-2 rounded-lg mt-2 bg-light">
+    <li class="p-2 rounded-lg mt-2 bg-light text-dark">
       หน้าจอ:
       {{
         apicompare.phones.find((phone) => phone.name === apicompare?.bestPhone)?.spec.display
@@ -146,7 +146,7 @@
     </li>
 
     <!-- โปรเซสเซอร์ -->
-    <li class="p-2 rounded-lg mt-2 bg-light">
+    <li class="p-2 rounded-lg mt-2 bg-light text-dark">
       โปรเซสเซอร์:
       {{
         apicompare.phones.find((phone) => phone.name === apicompare?.bestPhone)?.spec.processor
@@ -154,7 +154,7 @@
     </li>
 
     <!-- แรม -->
-    <li class="p-2 rounded-lg mt-2 bg-light">
+    <li class="p-2 rounded-lg mt-2 bg-light text-dark">
       แรม:
       {{
         apicompare.phones.find((phone) => phone.name === apicompare?.bestPhone)?.spec.ram
@@ -162,7 +162,7 @@
     </li>
 
     <!-- กล้อง -->
-    <li class="p-2 rounded-lg mt-2 bg-light">
+    <li class="p-2 rounded-lg mt-2 bg-light text-dark">
       กล้อง:
       {{
         apicompare.phones.find((phone) => phone.name === apicompare?.bestPhone)?.spec.camera
@@ -170,7 +170,7 @@
     </li>
 
     <!-- แบตเตอรี่ -->
-    <li class="p-2 rounded-lg mt-2 bg-light">
+    <li class="p-2 rounded-lg mt-2 bg-light text-dark">
       แบตเตอรี่:
       {{
         apicompare.phones.find((phone) => phone.name === apicompare?.bestPhone)?.spec.battery
