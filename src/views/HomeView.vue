@@ -1,99 +1,129 @@
 <template>
-  <div class="flex justify-center items-center min-h-screen bg-gray-900 p-4">
-    <div class="bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-4xl">
-      <h1 class="text-center text-2xl font-bold mb-6 text-white">เลือกหัวข้อที่ต้องการ</h1>
+  <div class="flex justify-center items-center min-h-screen bg-dark p-4">
+    <div class="bg-light p-4 rounded-lg shadow-lg w-full max-w-4xl">
+
+      <!-- Carousel with automatic banner slide -->
+      <div class="overflow-hidden relative" style="height: 300px; padding: 30 70px;">
+        <div
+          class="w-full h-full flex transition-all duration-1000"
+          :style="{ transform: `translateX(-${currentIndex * 100}%)` }"
+        >
+          <img src="@/assets/img/banner1.png" alt="Banner 1" class="w-full h-full rounded-lg object-cover " style="flex-shrink: 0; margin-right: 20px;"  />
+          <img src="@/assets/img/banner2.png" alt="Banner 2" class="w-full h-full rounded-lg object-cover " style="flex-shrink: 0;" />
+        </div>
+
+        <!-- Controls -->
+        <button @click="moveToPrevBanner" class="absolute top-1/2 left-4 transform -translate-y-1/2 text-white bg-black bg-opacity-50 p-2 rounded-full">
+          &lt;
+        </button>
+        <button @click="moveToNextBanner" class="absolute top-1/2 right-4 transform -translate-y-1/2 text-white bg-black bg-opacity-50 p-2 rounded-full">
+          &gt;
+        </button>
+      </div>
+      <br>
+
+      <h1 class="custom-font text-center text-2xl font-bold mb-6 text-dark">โปรดเลือกหัวข้อที่ท่านต้องการ</h1>
+      <h1 class="custom-font text-lg font-semibold mb-2 text-center text-dark">แบรนด์</h1>
 
       <!-- แบรนด์ -->
-      <fieldset class="mb-6">
-        <legend class="text-lg font-semibold mb-2 text-center text-white">แบรนด์</legend>
-        <div class="grid grid-cols-3 sm:grid-cols-9 gap-4 place-items-center">
-          <label
-            v-for="(logo, index) in logos"
-            :key="index"
-            class="cursor-pointer"
-            :class="selectedLogos.includes(logo.value) ? 'border-4 border-green-500' : 'border-0'"
-          >
-            <input type="checkbox" v-model="selectedLogos" :value="logo.value" class="hidden" />
-            <img
-              :src="logo.src"
-              :alt="logo.name"
-              class="w-16 h-16 sm:w-24 sm:h-24 object-contain hover:opacity-75 transition-opacity duration-300"
-            />
-          </label>
-        </div>
-      </fieldset>
+      <fieldset class="mb-6 border-2 border-primary p-4 rounded-lg">
+  <legend class="text-lg font-semibold mb-2 text-center text-dark"></legend>
+  <div class="grid grid-cols-3 sm:grid-cols-9 gap-4 place-items-center">
+    <label
+      v-for="(logo, index) in logos"
+      :key="index"
+      class="cursor-pointer"
+      :class="{
+        'border-2': selectedLogos.includes(logo.value),
+        'border-primary': selectedLogos.includes(logo.value), /* กรอบสีหลัก */
+        'border-opacity-50': !selectedLogos.includes(logo.value), /* กรอบที่ไม่เลือก */
+        'transition-all': true,
+        'rounded-md': true
+      }"
+    >
+      <input type="checkbox" v-model="selectedLogos" :value="logo.value" class="hidden" />
+      <img
+        :src="logo.src"
+        :alt="logo.name"
+        class="w-16 h-16 sm:w-16 sm:h-16 rounded-md object-contain hover:opacity-75 transition-opacity duration-300"
+      />
+    </label>
+  </div>
+</fieldset>
 
+
+<h1 class="custom-font text-lg font-semibold mb-2 text-center text-dark">ประเภทการใช้งาน</h1>
       <!-- ประเภทการใช้งาน -->
-      <fieldset class="mb-6">
-        <legend class="text-lg font-semibold mb-2 text-center text-white">ประเภทการใช้งาน</legend>
-        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
-          <label
-            v-for="category in categories"
-            :key="category.value"
-            class="cursor-pointer"
-            :class="selectedCategory === category.value ? 'border-4 border-green-500' : 'border-0'"
-          >
-            <input
-              type="radio"
-              name="category"
-              :value="category.value"
-              v-model="selectedCategory"
-              class="hidden"
-            />
-            <span
-              class="block text-center p-2 rounded cursor-pointer text-white"
-              :class="[category.color, selectedCategory === category.value ? 'bg-green-500' : '']"
-            >
-              {{ category.label }}
-            </span>
-          </label>
-        </div>
-      </fieldset>
+      <fieldset class="mb-6 bg-gray-300 border-2 border-primary p-4 rounded-lg">
+  <legend class="text-lg font-semibold mb-2 text-center text-dark"></legend>
+  <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+    <label
+      v-for="category in categories"
+      :key="category.value"
+      class="cursor-pointer"
+      :class="selectedCategory === category.value ? 'border-2  rounded-lg' : 'border-2 border-gray-300 rounded-lg'"
+    >
+      <input
+        type="radio"
+        name="category"
+        :value="category.value"
+        v-model="selectedCategory"
+        class="hidden"
+      />
+      <span
+        class="block custom-font text-center p-2 rounded-lg cursor-pointer"
+        :class="[category.color, selectedCategory === category.value ? 'bg-primary text-white' : 'text-black ']"
+      >
+        {{ category.label }}
+      </span>
+    </label>
+  </div>
+</fieldset>
 
+
+<h1 class="custom-font text-lg font-semibold mb-2 text-center text-dark">ระดับราคา</h1>
       <!-- ระดับราคา -->
-      <fieldset class="mb-6">
-        <legend class="text-lg font-semibold mb-2 text-center text-white">ระดับราคา</legend>
-        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
-          <label
-            v-for="price in prices"
-            :key="price.min"
-            class="cursor-pointer"
-            :class="
-              selectedPrice.min === price.min && selectedPrice.max === price.max
-                ? 'border-4 border-green-500'
-                : 'border-0'
-            "
-          >
-            <input
-              type="radio"
-              name="Price"
-              v-model="selectedPrice"
-              :value="price"
-              class="hidden"
-              @click="togglePrice(price)"
-            />
-            <span
-              class="block text-center p-2 rounded cursor-pointer text-white"
-              :class="[
-                price.color,
-                selectedPrice.min === price.min && selectedPrice.max === price.max
-                  ? 'bg-green-500'
-                  : '',
-              ]"
-              style="white-space: pre-line"
-            >
-              {{ price.label }}
-            </span>
-          </label>
-        </div>
-      </fieldset>
+      <fieldset class="mb-6 bg-gray-300 border-2 border-primary p-4 rounded-lg">
+  <legend class="text-lg font-semibold mb-2 text-center text-dark"></legend>
+  <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+    <label
+      v-for="(price, index) in prices"
+      :key="price.min"
+      class="cursor-pointer"
+      :class="{
+        'border-2 rounded-lg': selectedPrice.min === price.min && selectedPrice.max === price.max,
+        'border-2 border-gray-300 rounded-lg': selectedPrice.min !== price.min || selectedPrice.max !== price.max,
+        'col-span-full': index === prices.length - 1 // ใช้คลาส col-span-full สำหรับตัวสุดท้าย
+      }"
+    >
+      <input
+        type="radio"
+        name="Price"
+        v-model="selectedPrice"
+        :value="price"
+        class="hidden"
+        @click="togglePrice(price)"
+      />
+      <span
+        class="block custom-font items-center text-center p-2 rounded-lg cursor-pointer w-full"
+        :class="[price.color, selectedPrice.min === price.min && selectedPrice.max === price.max ? 'bg-primary text-white' : 'text-black']"
+        style="white-space: pre-line"
+      >
+        {{ price.label }}
+      </span>
+    </label>
+  </div>
+</fieldset>
+
+
 
       <!-- มือถือ -->
-      <fieldset>
-        <legend class="text-lg font-semibold mb-2 text-center text-white">
-          เลือก 3 รุ่น เพื่อเปรียบเทียบ
+      <fieldset class=" mb-6 border-2 border-primary p-4 rounded-lg" >
+        <legend class="custom-font text-lg font-semibold mb-2 text-center text-dark">
+           เลือกโทรศัพท์มือถือ 3 รุ่น เพื่อทำการเปรียบเทียบ
         </legend>
         <div class="overflow-x-auto">
+
           <div
             class="flex flex-wrap gap-4 justify-start"
             style="max-height: calc(5 * 5rem); width: 100%"
@@ -102,41 +132,54 @@
               v-for="(mobile, index) in apiResponse.data"
               :key="mobile.slug"
               class="flex flex-col items-center w-1/3 sm:w-1/4 md:w-1/6"
-              :class="selectedMobiles.includes(mobile.slug) ? 'border-4 border-green-500' : ''"
+              :class="selectedMobiles.includes(mobile.slug) ? '' : ''"
             >
-              <input
-                type="checkbox"
-                :id="'mobile' + index"
-                name="mobile"
-                :value="mobile.slug"
-                :disabled="selectedMobiles.length >= 3 && !selectedMobiles.includes(mobile.slug)"
-                v-model="selectedMobiles"
-                class="hidden"
-              />
-              <div class="flex flex-col items-center">
-                <img
-                  :src="mobile.image"
-                  :alt="mobile.phone_name"
-                  class="w-16 h-16 sm:w-24 sm:h-24 object-contain"
-                />
-                <label :for="'mobile' + index" class="text-white mt-2 text-center">
-                  {{ mobile.phone_name }}
-                </label>
-              </div>
+            <input
+  type="checkbox"
+  :id="'mobile' + index"
+  name="mobile"
+  :value="mobile.slug"
+  :disabled="selectedMobiles.length >= 3 && !selectedMobiles.includes(mobile.slug)"
+  v-model="selectedMobiles"
+  class="hidden"
+/>
+<div
+  class="flex custom-font flex-col items-center p-3 rounded-lg transition-all"
+  :class="selectedMobiles.includes(mobile.slug)
+    ? 'bg-primary-light border-2 border-primary text-white shadow-md'
+    : 'bg-white border border-gray-300 text-gray-700 hover:shadow-sm'"
+>
+  <img
+    :src="mobile.image"
+    :alt="mobile.phone_name"
+    class="w-16 h-16 sm:w-24 sm:h-24 object-contain"
+  />
+  <label
+    :for="'mobile' + index"
+    class="mt-2 text-center text-sm font-medium"
+    :class="selectedMobiles.includes(mobile.slug) ? 'text-gray-800' : 'text-gray-800'"
+  >
+    {{ mobile.phone_name }}
+  </label>
+</div>
+
             </label>
           </div>
         </div>
-        <button
+        <div>
+          <button
           @click="compare"
-          class="block mx-auto mt-4 bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition-colors"
+          class="block mx-auto mt-4 bg-primary text-white py-2 px-4 rounded hover:bg-primary-hover transition-colors"
         >
           เปรียบเทียบ
         </button>
+        <popup v-if="showPopup" :message="popupMessage" @close="closePopup" />
+        </div>
+
       </fieldset>
     </div>
   </div>
 </template>
-
 
 <script lang="ts">
 import SamsungLogo from '../assets/img/logo_samsung.png'
@@ -150,6 +193,7 @@ import OppoLogo from '../assets/img/logo_oppo.png'
 import RealmeLogo from '../assets/img/logo_realme.png'
 import axios from 'axios'
 import { defineComponent } from 'vue'
+import Popup from './BBPopup.vue'
 
 interface Mobile {
   slug: string
@@ -163,6 +207,9 @@ interface Price {
   color: string
 }
 export default {
+  components: {
+    Popup,
+  },
   data() {
     return {
       logos: [
@@ -178,31 +225,31 @@ export default {
       ],
 
       categories: [
-        { label: 'ใช้งานทั่วไป', value: 'general', color: 'bg-gray-500 hover:bg-gray-600' },
-        { label: 'เล่นเกม', value: 'game', color: 'bg-gray-500 hover:bg-gray-600' },
-        { label: 'ถ่ายรูปสวย', value: 'photography', color: 'bg-gray-500 hover:bg-gray-600' },
-        { label: 'สำหรับไรเดอร์', value: 'rider', color: 'bg-gray-500 hover:bg-gray-600' },
-        { label: 'AI Feature', value: 'ai', color: 'bg-gray-500 hover:bg-gray-600' },
-        { label: 'วิดีโอ ไลฟ์สด', value: 'livestream', color: 'bg-gray-500 hover:bg-gray-600' },
+        { label: 'ใช้งานทั่วไป', value: 'general', color: 'bg-gray-100  hover:bg-gray-400' },
+        { label: 'เล่นเกม', value: 'game', color: 'bg-gray-100 hover:bg-gray-400' },
+        { label: 'ถ่ายรูปสวย', value: 'photography', color: 'bg-gray-100 hover:bg-gray-400' },
+        { label: 'สำหรับไรเดอร์', value: 'rider', color: 'bg-gray-100 hover:bg-gray-400' },
+        { label: 'AI Feature', value: 'ai', color: 'bg-gray-100 hover:bg-gray-400' },
+        { label: 'วิดีโอ ไลฟ์สด', value: 'livestream', color: 'bg-gray-100 hover:bg-gray-400' },
       ],
       prices: [
         {
           label: 'ระดับเริ่มต้น\n 0 - 5,000',
           min: 1,
           max: 5000,
-          color: 'bg-gray-500 hover:bg-gray-600',
+          color: 'bg-gray-100 hover:bg-gray-400',
         },
         {
           label: 'ระดับกลาง\n 8,000 - 15,000',
           min: 8000,
           max: 15000,
-          color: 'bg-gray-500 hover:bg-gray-600',
+          color: 'bg-gray-100 hover:bg-gray-400',
         },
         {
           label: 'ระดับพรีเมี่ยม\n 25,000 +++',
           min: 25000,
           max: 1000000,
-          color: 'bg-gray-500 hover:bg-gray-600',
+          color: 'bg-gray-100 hover:bg-gray-400',
         },
       ] as Price[],
       selectedLogos: [] as string[],
@@ -211,7 +258,14 @@ export default {
       selectedCategory: '',
       selectedPrice: { min: 0, max: 1000000 } as Price,
       // To store API response data
+      currentIndex: 0,
+      isVisible: true,
+      showPopup: false,
+      popupMessage: '',
     }
+  },
+  mounted() {
+    setInterval(this.moveToNextBanner, 10000); // Slide every 10 seconds
   },
   methods: {
     togglePrice(price: Price) {
@@ -230,14 +284,19 @@ export default {
     },
     compare() {
       if (this.selectedMobiles.length !== 3) {
-        alert('กรุณาเลือก 3 รุ่นเพื่อเปรียบเทียบ')
+        this.popupMessage = 'กรุณาเลือกข้อมูลให้ครบถ้วน';
+        this.showPopup = true;
       } else {
         this.$router.push({
           name: 'compare',
           query: { mobiles: JSON.stringify(this.selectedMobiles) },
-        })
+        });
       }
     },
+    closePopup() {
+      this.showPopup = false;
+    },
+
     async fetchBrandDetails() {
       if (this.selectedLogos.length === 0 || this.selectedCategory.length === 0) {
         this.apiResponse = { data: [] }
@@ -267,6 +326,12 @@ export default {
         alert('ไม่สามารถดึงข้อมูลได้. กรุณาลองใหม่อีกครั้ง')
       }
     },
+    moveToPrevBanner() {
+      this.currentIndex = (this.currentIndex === 0 ? 1 : this.currentIndex - 1); // Loop back to last image
+    },
+    moveToNextBanner() {
+      this.currentIndex = (this.currentIndex + 1) % 2; // Loop through 2 images
+    },
   },
 
   watch: {
@@ -288,46 +353,232 @@ export default {
 </script>
 
 <style scoped>
-/* Dark theme customization */
-.bg-gray-900 {
-  background-color: #111827;
+/* Global Colors */
+.bg-dark {
+  background-color: #000000;
 }
 
-.bg-gray-800 {
-  background-color: #1f2937;
+.bg-light {
+  background-color: #ffffff;
 }
 
 .text-white {
   color: #ffffff;
 }
 
+.text-dark {
+  color: #000000;
+}
+
+.border-primary {
+  border-color: #000000;
+}
+
+.bg-primary {
+  background-color: #000000;
+
+}
+
+.bg-primary-hover:hover {
+  background-color: #333333;
+}
+
+/* Button Styling */
+button {
+  background-color: #000000;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
 button:hover {
-  background-color: #2563eb;
+  background-color: #333333;
 }
 
-/* Style for the box containing selected logos with clear visibility */
-.bg-gray-700 {
-  background-color: #374151;
+/* Other styles */
+.shadow-lg {
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.bg-blue-600 {
-  background-color: #2563eb;
-}
-
-.bg-blue-600:hover {
-  background-color: #3b82f6;
-}
-
-/* Additional styling for clear box visibility */
 .border-4 {
   border-width: 4px;
 }
 
-.border-blue-600 {
-  border-color: #2563eb;
+.border-0 {
+  border-width: 0;
 }
 
-.shadow-xl {
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+.text-center {
+  text-align: center;
+}
+
+.text-lg {
+  font-size: 1.125rem;
+}
+
+.text-2xl {
+  font-size: 1.5rem;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+.font-semibold {
+  font-weight: 600;
+}
+
+.p-4 {
+  padding: 1rem;
+}
+
+.p-6 {
+  padding: 1.5rem;
+}
+
+.m-0 {
+  margin: 0;
+}
+
+.mb-2 {
+  margin-bottom: 0.5rem;
+}
+
+.mb-6 {
+  margin-bottom: 1.5rem;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.max-w-4xl {
+  max-width: 60rem;
+}
+
+.rounded-lg {
+  border-radius: 0.5rem;
+}
+
+.hidden {
+  display: none;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.hover\:opacity-75:hover {
+  opacity: 0.75;
+}
+
+.transition-opacity {
+  transition: opacity 0.3s;
+}
+
+.sm\:w-14 {
+  width: 25%;
+}
+
+.sm\:w-13 {
+  width: 33.33%;
+}
+
+.md\:w-16 {
+  width: 16.67%;
+}
+
+.w-16 {
+  width: 4rem;
+}
+
+.h-16 {
+  height: 4rem;
+}
+
+.sm\:w-24 {
+  width: 6rem;
+}
+
+.sm\:h-24 {
+  height: 6rem;
+}
+
+.object-contain {
+  object-fit: contain;
+}
+
+.grid {
+  display: grid;
+}
+
+.grid-cols-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.grid-cols-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.sm\:grid-cols-9 {
+  grid-template-columns: repeat(9, 1fr);
+}
+
+.gap-4 {
+  gap: 1rem;
+}
+
+.gap-2 {
+  gap: 0.5rem;
+}
+
+.place-items-center {
+  place-items: center;
+}
+
+.overflow-x-auto {
+  overflow-x: auto;
+}
+
+/* Global border-primary */
+.border-primary {
+  border-color: #000000; /* สีดำ */
+}
+
+/* กำหนดกรอบสีที่โปร่งใส */
+.border-primary {
+  border-color: rgb(7, 7, 7); /* กำหนดสีของกรอบให้เป็นขาว */
+}
+
+/* กรอบโปร่งใสที่ความโปร่งใส 50% */
+.border-opacity-50 {
+  border-color: rgba(255, 255, 255, 0.5); /* ความโปร่งใส 50% */
+}
+
+/* กรอบโปร่งใสเต็มที่ (ไม่โปร่งใส) */
+.border-opacity-100 {
+  border-color: rgba(255, 255, 255, 1); /* ความโปร่งใส 100% */
+}
+
+.w-full {
+  width: 100%;
+}
+
+.h-full {
+  height: 100%;
+}
+
+.object-cover {
+  object-fit: cover;
+}
+
+@font-face {
+  font-family: 'FC-Subject-Rounded-Regular';
+  src: url('@/assets/myfonts/FC-Subject-Rounded-Regular.ttf') format('truetype');
+}
+
+.custom-font {
+  font-family: 'FC-Subject-Rounded-Regular', sans-serif;
 }
 </style>

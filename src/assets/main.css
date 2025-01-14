@@ -77,3 +77,9 @@ a:hover,
     padding: 2rem;           /* เพิ่มระยะห่างภายใน */
   }
 }
+@font-face {
+  font-family: 'FC-Subject-Rounded-Regular'; /* ชื่อฟอนต์ */
+  src: url('@/assets/myfonts/FC-Subject-Rounded-Regular.ttf') format('truetype'); /* พาธฟอนต์ */
+  font-weight: normal; /* ระบุความหนา */
+  font-style: normal; /* ระบุสไตล์ */
+}

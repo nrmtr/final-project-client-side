@@ -17,6 +17,7 @@
     "@headlessui/vue": "^1.7.23",
     "@heroicons/vue": "^2.2.0",
     "axios": "^1.7.9",
+    "bootstrap": "^5.3.3",
     "gsmarena-api": "^2.0.5",
     "node-fetch": "^3.3.2",
     "pinia": "^2.2.6",

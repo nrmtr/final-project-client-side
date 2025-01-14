@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="layout">
-      <Disclosure as="nav" class="bg-gray-800 fixed top-0 left-0 w-full z-50" v-slot="{ open }">
+      <Disclosure as="nav" class="bg-dark fixed top-0 left-0 w-full z-50" v-slot="{ open }">
         <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
           <div class="relative flex h-16 items-center justify-between">
             <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -14,14 +14,14 @@
                 <XMarkIcon v-else class="block size-6" aria-hidden="true" />
               </DisclosureButton>
             </div>
-            <div class="flex flex-1 items-center justify-center sm:items-stretch">
+            <div class="flex custom-font flex-1 items-center justify-center sm:items-stretch">
               <div class="hidden sm:ml-6 sm:block">
                 <div class="flex space-x-4">
                   <RouterLink
                     v-for="item in navigation"
                     :key="item.name"
                     :to="item.href"
-                    :class="[item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white', 'rounded-md px-3 py-2 text-sm font-medium']"
+                    :class="[item.current ? 'bg-gray-950 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white', 'rounded-md px-3 py-2 text-sm font-medium']"
                     :aria-current="item.current ? 'page' : undefined"
                     @click="updateCurrent(item.name)"
                   >
@@ -54,17 +54,17 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from 'vue';
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue';
 import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline';
 import { RouterLink, RouterView } from 'vue-router';
 
 const navigation = ref([
-  { name: 'Home', href: '/', current: true },
+  { name: 'PhoneScout | เปรียบเทียบมือถือ', href: '/', current: true },
 ]);
 
-const updateCurrent = (selectedName) => {
+const updateCurrent = (selectedName:string) => {
   navigation.value = navigation.value.map((item) => ({
     ...item,
     current: item.name === selectedName,
@@ -87,10 +87,21 @@ body {
 }
 
 .content {
-  flex: 1; /* ให้พื้นที่เหลือของ Layout เป็นของ Content */
+  flex: 0; /* ให้พื้นที่เหลือของ Layout เป็นของ Content */
   margin-top: 4rem; /* ระยะเผื่อสำหรับ Navbar */
   padding: 1rem; /* เพิ่ม padding สำหรับ Content */
   padding-bottom: 4rem; /* เพิ่มพื้นที่ด้านล่าง */
   overflow-y: auto; /* เปิด Scrollbar แค่ในเนื้อหา */
+  background-color: #000000;
 }
+
+@font-face {
+  font-family: 'FC-Subject-Rounded-Regular';
+  src: url('@/assets/myfonts/FC-Subject-Rounded-Regular.ttf') format('truetype');
+}
+
+.custom-font {
+  font-family: 'FC-Subject-Rounded-Regular', sans-serif;
+}
+
 </style>
