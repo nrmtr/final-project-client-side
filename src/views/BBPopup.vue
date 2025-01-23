@@ -17,15 +17,15 @@ export default {
   data() {
     return {
       isVisible: true, // ใช้ควบคุมการแสดงผลของ popup
-    };
+    }
   },
   methods: {
     closePopup() {
-      this.isVisible = false; // ปิด popup
-      this.$emit('close'); // Emit event ไปยัง parent
+      this.isVisible = false // ปิด popup
+      this.$emit('close') // Emit event ไปยัง parent
     },
   },
-};
+}
 </script>
 
 <style scoped>

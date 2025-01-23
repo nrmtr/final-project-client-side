@@ -10,93 +10,99 @@
         <div
           v-for="(phone, index) in apicompare.phones.slice(0, 3)"
           :key="index"
-          class="p-4 bg-gray-300  border-2 border-primary rounded-lg text-dark shadow-xl"
+          class="p-4 bg-gray-300 border-2 border-primary rounded-lg text-dark shadow-xl"
         >
-        <div class="text-center mb-4">
-  <h2 class="custom-font text-lg font-bold">{{ phone.name }}</h2>
-  <img
-    :src="phone.image"
-    alt="Phone image"
-    class="mx-auto rounded-lg w-32 h-44 object-contain my-4"
-  />
-</div>
-<!-- รายละเอียดของมือถือ -->
-<div class="mb-4 custom-font">
-  <!-- หน้าจอ -->
-  <div
-    class="p-4 border-2 rounded-lg mb-2"
-    :class="{
-      'bg-dark text-white': phone.specifications_score.display === maxScores.display,
-      'bg-gray-200 text-black': phone.specifications_score.display !== maxScores.display,
-    }"
-  >
-    <strong>หน้าจอ:</strong>
-    {{ phone.spec.display }}
-  </div>
+          <div class="text-center mb-4">
+            <h2 class="custom-font text-lg font-bold">{{ phone.name }}</h2>
+            <img
+              :src="phone.image"
+              alt="Phone image"
+              class="mx-auto rounded-lg w-32 h-44 object-contain my-4"
+            />
+          </div>
+          <!-- รายละเอียดของมือถือ -->
+          <div class="mb-4 custom-font">
+            <!-- หน้าจอ -->
+            <div
+              class="p-4 border-2 rounded-lg mb-2"
+              :class="{
+                'bg-dark text-white': phone.specifications_score.display === maxScores.display,
+                'bg-gray-200 text-black': phone.specifications_score.display !== maxScores.display,
+              }"
+            >
+              <strong>หน้าจอ:</strong>
+              {{ phone.spec.display }}
+            </div>
 
-  <!-- โปรเซสเซอร์ -->
-  <div
-    class="p-4 border-2 rounded-lg mb-2"
-    :class="{
-      'bg-dark text-white': phone.specifications_score.processor === maxScores.processor,
-      'bg-gray-200 text-black': phone.specifications_score.processor !== maxScores.processor,
-    }"
-  >
-    <strong>โปรเซสเซอร์:</strong>
-    {{ phone.spec.processor }}
-  </div>
+            <!-- โปรเซสเซอร์ -->
+            <div
+              class="p-4 border-2 rounded-lg mb-2"
+              :class="{
+                'bg-dark text-white': phone.specifications_score.processor === maxScores.processor,
+                'bg-gray-200 text-black':
+                  phone.specifications_score.processor !== maxScores.processor,
+              }"
+            >
+              <strong>โปรเซสเซอร์:</strong>
+              {{ phone.spec.processor }}
+            </div>
 
-  <!-- แรม -->
-  <div
-    class="p-4 border-2 rounded-lg mb-2"
-    :class="{
-      'bg-dark text-white': phone.specifications_score.ram === maxScores.ram,
-      'bg-gray-200 text-black': phone.specifications_score.ram !== maxScores.ram,
-    }"
-  >
-    <strong>แรม:</strong>
-    {{ phone.spec.ram }}
-  </div>
+            <!-- แรม -->
+            <div
+              class="p-4 border-2 rounded-lg mb-2"
+              :class="{
+                'bg-dark text-white': phone.specifications_score.ram === maxScores.ram,
+                'bg-gray-200 text-black': phone.specifications_score.ram !== maxScores.ram,
+              }"
+            >
+              <strong>แรม:</strong>
+              {{ phone.spec.ram }}
+            </div>
 
-  <!-- กล้อง -->
-  <div
-    class="p-4 border-2 rounded-lg mb-2"
-    :class="{
-      'bg-dark text-white': phone.specifications_score.camera === maxScores.camera,
-      'bg-gray-200 text-black': phone.specifications_score.camera !== maxScores.camera,
-    }"
-  >
-    <strong>กล้อง:</strong>
-    {{ phone.spec.camera }}
-  </div>
+            <!-- กล้อง -->
+            <div
+              class="p-4 border-2 rounded-lg mb-2"
+              :class="{
+                'bg-dark text-white': phone.specifications_score.camera === maxScores.camera,
+                'bg-gray-200 text-black': phone.specifications_score.camera !== maxScores.camera,
+              }"
+            >
+              <strong>กล้อง:</strong>
+              {{ phone.spec.camera }}
+            </div>
 
-  <!-- แบตเตอรี่ -->
-  <div
-    class="p-4 border-2 rounded-lg mb-2"
-    :class="{
-      'bg-dark text-white': phone.specifications_score.battery === maxScores.battery,
-      'bg-gray-200 text-black': phone.specifications_score.battery !== maxScores.battery,
-    }"
-  >
-    <strong>แบตเตอรี่:</strong>
-    {{ phone.spec.battery }}
-  </div>
+            <!-- แบตเตอรี่ -->
+            <div
+              class="p-4 border-2 rounded-lg mb-2"
+              :class="{
+                'bg-dark text-white': phone.specifications_score.battery === maxScores.battery,
+                'bg-gray-200 text-black': phone.specifications_score.battery !== maxScores.battery,
+              }"
+            >
+              <strong>แบตเตอรี่:</strong>
+              {{ phone.spec.battery }}
+            </div>
 
-  <!-- คะแนนรวม -->
-  <div
-    class="p-4 border-2 rounded-lg mb-2"
-    :class="{
-      'bg-dark text-white': phone.score === maxTotalScore,
-      'bg-gray-200 text-black': phone.score !== maxTotalScore,
-    }"
-  >
-    <strong>คะแนนรวม:</strong>
-    {{ phone.score }}
-  </div>
-</div>
+            <!-- คะแนนรวม -->
+            <div
+              class="p-4 border-2 rounded-lg mb-2"
+              :class="{
+                'bg-dark text-white': phone.score === maxTotalScore,
+                'bg-gray-200 text-black': phone.score !== maxTotalScore,
+              }"
+            >
+              <strong>คะแนนรวม:</strong>
+              {{ phone.score }}
+            </div>
+          </div>
 
           <div class="text-center mt-4 custom-font">
-            <button class="block mx-auto mt-4 bg-primary text-white py-2 px-4 rounded hover:bg-primary-hover transition-colors">
+            <button
+              class="block mx-auto mt-4 bg-primary text-white py-2 px-4 rounded hover:bg-primary-hover transition-colors"
+              @click="
+                $router.push({ name: 'details', query: { mobiles: JSON.stringify([phone.slug]) } })
+              "
+            >
               ดูรายละเอียด
             </button>
           </div>
@@ -104,12 +110,16 @@
       </div>
 
       <!-- Recommended Phone -->
-      <h1 class="custom-font text-center text-2xl font-bold mb-6 mt-8 text-dark">โทรศัพท์มือถือที่เราแนะนำให้คุณ</h1>
+      <h1 class="custom-font text-center text-2xl font-bold mb-6 mt-8 text-dark">
+        โทรศัพท์มือถือที่เราแนะนำให้คุณ
+      </h1>
       <div
         v-if="apicompare?.bestPhone && apicompare.phones"
         class="grid grid-cols-1 sm:grid-cols-2 gap-6"
       >
-        <div class="custom-font text-dark text-center bg-gray-300 border-2 border-primary p-4 rounded-lg">
+        <div
+          class="custom-font text-dark text-center bg-gray-300 border-2 border-primary p-4 rounded-lg"
+        >
           <h2 class="font-bold text-lg text-dark">
             {{ apicompare.phones.find((phone) => phone.name === apicompare?.bestPhone)?.name }}
           </h2>
@@ -120,70 +130,74 @@
           />
         </div>
         <div class="bg-gray-300 border-2 border-primary p-4 rounded-lg">
-  <!-- คะแนนรวม -->
-  <div class="mb-4 custom-font text-dark">
-    <strong>คะแนนรวม</strong>
-    <li class="p-2 rounded-lg mt-2 bg-light text-dark">
-      {{
-      apicompare.phones.find((phone) => phone.name === apicompare?.bestPhone)?.score
-    }}
-    </li>
+          <!-- คะแนนรวม -->
+          <div class="mb-4 custom-font text-dark">
+            <strong>คะแนนรวม</strong>
+            <li class="p-2 rounded-lg mt-2 bg-light text-dark">
+              {{ apicompare.phones.find((phone) => phone.name === apicompare?.bestPhone)?.score }}
+            </li>
+          </div>
 
-  </div>
+          <!-- รายละเอียด -->
+          <ul class="text-sm mt-4 custom-font text-dark">
+            <li>
+              <strong>รายละเอียด:</strong>
+            </li>
 
-  <!-- รายละเอียด -->
-  <ul class="text-sm mt-4 custom-font text-dark">
-    <li>
-      <strong>รายละเอียด:</strong>
-    </li>
+            <!-- หน้าจอ -->
+            <li class="p-2 rounded-lg mt-2 bg-light text-dark">
+              หน้าจอ:
+              {{
+                apicompare.phones.find((phone) => phone.name === apicompare?.bestPhone)?.spec
+                  .display
+              }}
+            </li>
 
-    <!-- หน้าจอ -->
-    <li class="p-2 rounded-lg mt-2 bg-light text-dark">
-      หน้าจอ:
-      {{
-        apicompare.phones.find((phone) => phone.name === apicompare?.bestPhone)?.spec.display
-      }}
-    </li>
+            <!-- โปรเซสเซอร์ -->
+            <li class="p-2 rounded-lg mt-2 bg-light text-dark">
+              โปรเซสเซอร์:
+              {{
+                apicompare.phones.find((phone) => phone.name === apicompare?.bestPhone)?.spec
+                  .processor
+              }}
+            </li>
 
-    <!-- โปรเซสเซอร์ -->
-    <li class="p-2 rounded-lg mt-2 bg-light text-dark">
-      โปรเซสเซอร์:
-      {{
-        apicompare.phones.find((phone) => phone.name === apicompare?.bestPhone)?.spec.processor
-      }}
-    </li>
+            <!-- แรม -->
+            <li class="p-2 rounded-lg mt-2 bg-light text-dark">
+              แรม:
+              {{
+                apicompare.phones.find((phone) => phone.name === apicompare?.bestPhone)?.spec.ram
+              }}
+            </li>
 
-    <!-- แรม -->
-    <li class="p-2 rounded-lg mt-2 bg-light text-dark">
-      แรม:
-      {{
-        apicompare.phones.find((phone) => phone.name === apicompare?.bestPhone)?.spec.ram
-      }}
-    </li>
+            <!-- กล้อง -->
+            <li class="p-2 rounded-lg mt-2 bg-light text-dark">
+              กล้อง:
+              {{
+                apicompare.phones.find((phone) => phone.name === apicompare?.bestPhone)?.spec.camera
+              }}
+            </li>
 
-    <!-- กล้อง -->
-    <li class="p-2 rounded-lg mt-2 bg-light text-dark">
-      กล้อง:
-      {{
-        apicompare.phones.find((phone) => phone.name === apicompare?.bestPhone)?.spec.camera
-      }}
-    </li>
+            <!-- แบตเตอรี่ -->
+            <li class="p-2 rounded-lg mt-2 bg-light text-dark">
+              แบตเตอรี่:
+              {{
+                apicompare.phones.find((phone) => phone.name === apicompare?.bestPhone)?.spec
+                  .battery
+              }}
+            </li>
+          </ul>
 
-    <!-- แบตเตอรี่ -->
-    <li class="p-2 rounded-lg mt-2 bg-light text-dark">
-      แบตเตอรี่:
-      {{
-        apicompare.phones.find((phone) => phone.name === apicompare?.bestPhone)?.spec.battery
-      }}
-    </li>
-  </ul>
-
-  <!-- ปุ่มดูรายละเอียด -->
-  <button class="block custom-font mx-auto mt-4 bg-primary text-white py-2 px-4 rounded hover:bg-primary-hover transition-colors">
-    ดูรายละเอียดเพิ่มเติม
-  </button>
-</div>
-
+          <!-- ปุ่มดูรายละเอียด -->
+          <button
+              class="block mx-auto mt-4 bg-primary text-white py-2 px-4 rounded hover:bg-primary-hover transition-colors"
+              @click="
+                $router.push({ name: 'details', query: { mobiles: JSON.stringify([apicompare.phones.find((phone) => phone.name === apicompare?.bestPhone)?.slug]) } })
+              "
+            >
+              ดูรายละเอียด
+            </button>
+        </div>
       </div>
       <div v-else>
         <p class="text-center text-white">ไม่มีมือถือแนะนำในขณะนี้</p>
@@ -213,6 +227,7 @@ interface PhoneSpecScore {
   price: number | null
 }
 interface Phone {
+  slug: string
   name: string
   image: string
   score: number | null
@@ -277,6 +292,7 @@ export default defineComponent({
         const phones = Object.values(response.data)
           .filter((item: any) => item.name) // Only keep items that have a 'name' property
           .map((item: any) => ({
+            slug: item.slug,
             name: item.name,
             image: item.image,
             score: item.score,
@@ -371,7 +387,6 @@ button:hover {
 
 .bg-primary {
   background-color: #000000;
-
 }
 
 @font-face {

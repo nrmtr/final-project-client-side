@@ -21,7 +21,12 @@
                     v-for="item in navigation"
                     :key="item.name"
                     :to="item.href"
-                    :class="[item.current ? 'bg-gray-950 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white', 'rounded-md px-3 py-2 text-sm font-medium']"
+                    :class="[
+                      item.current
+                        ? 'bg-gray-950 text-white'
+                        : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                      'rounded-md px-3 py-2 text-sm font-medium',
+                    ]"
                     :aria-current="item.current ? 'page' : undefined"
                     @click="updateCurrent(item.name)"
                   >
@@ -38,7 +43,12 @@
               v-for="item in navigation"
               :key="item.name"
               :to="item.href"
-              :class="[item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white', 'block rounded-md px-3 py-2 text-base font-medium']"
+              :class="[
+                item.current
+                  ? 'bg-gray-900 text-white'
+                  : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                'block rounded-md px-3 py-2 text-base font-medium',
+              ]"
               :aria-current="item.current ? 'page' : undefined"
               @click="updateCurrent(item.name)"
             >
@@ -55,22 +65,19 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount } from 'vue';
-import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue';
-import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline';
-import { RouterLink, RouterView } from 'vue-router';
+import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'
+import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline'
+import { RouterLink, RouterView } from 'vue-router'
 
-const navigation = ref([
-  { name: 'PhoneScout | เปรียบเทียบมือถือ', href: '/', current: true },
-]);
+const navigation = ref([{ name: 'PhoneScout | เปรียบเทียบมือถือ', href: '/', current: true }])
 
-const updateCurrent = (selectedName:string) => {
+const updateCurrent = (selectedName: string) => {
   navigation.value = navigation.value.map((item) => ({
     ...item,
     current: item.name === selectedName,
-  }));
-};
-
+  }))
+}
 </script>
 
 <style>
@@ -103,5 +110,4 @@ body {
 .custom-font {
   font-family: 'FC-Subject-Rounded-Regular', sans-serif;
 }
-
 </style>

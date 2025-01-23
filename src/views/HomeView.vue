@@ -1,129 +1,155 @@
 <template>
   <div class="flex justify-center items-center min-h-screen bg-dark p-4">
     <div class="bg-light p-4 rounded-lg shadow-lg w-full max-w-4xl">
-
       <!-- Carousel with automatic banner slide -->
-      <div class="overflow-hidden relative" style="height: 300px; padding: 30 70px;">
+      <div class="overflow-hidden relative" style="height: 300px; padding: 30 70px">
         <div
           class="w-full h-full flex transition-all duration-1000"
           :style="{ transform: `translateX(-${currentIndex * 100}%)` }"
         >
-          <img src="@/assets/img/banner1.png" alt="Banner 1" class="w-full h-full rounded-lg object-cover " style="flex-shrink: 0; margin-right: 20px;"  />
-          <img src="@/assets/img/banner2.png" alt="Banner 2" class="w-full h-full rounded-lg object-cover " style="flex-shrink: 0;" />
+          <img
+            src="@/assets/img/banner1.png"
+            alt="Banner 1"
+            class="w-full h-full rounded-lg object-cover"
+            style="flex-shrink: 0; margin-right: 20px"
+          />
+          <img
+            src="@/assets/img/banner2.png"
+            alt="Banner 2"
+            class="w-full h-full rounded-lg object-cover"
+            style="flex-shrink: 0"
+          />
         </div>
 
         <!-- Controls -->
-        <button @click="moveToPrevBanner" class="absolute top-1/2 left-4 transform -translate-y-1/2 text-white bg-black bg-opacity-50 p-2 rounded-full">
+        <button
+          @click="moveToPrevBanner"
+          class="absolute top-1/2 left-4 transform -translate-y-1/2 text-white bg-black bg-opacity-50 p-2 rounded-full"
+        >
           &lt;
         </button>
-        <button @click="moveToNextBanner" class="absolute top-1/2 right-4 transform -translate-y-1/2 text-white bg-black bg-opacity-50 p-2 rounded-full">
+        <button
+          @click="moveToNextBanner"
+          class="absolute top-1/2 right-4 transform -translate-y-1/2 text-white bg-black bg-opacity-50 p-2 rounded-full"
+        >
           &gt;
         </button>
       </div>
-      <br>
+      <br />
 
-      <h1 class="custom-font text-center text-2xl font-bold mb-6 text-dark">โปรดเลือกหัวข้อที่ท่านต้องการ</h1>
+      <h1 class="custom-font text-center text-2xl font-bold mb-6 text-dark">
+        โปรดเลือกหัวข้อที่ท่านต้องการ
+      </h1>
       <h1 class="custom-font text-lg font-semibold mb-2 text-center text-dark">แบรนด์</h1>
 
       <!-- แบรนด์ -->
       <fieldset class="mb-6 border-2 border-primary p-4 rounded-lg">
-  <legend class="text-lg font-semibold mb-2 text-center text-dark"></legend>
-  <div class="grid grid-cols-3 sm:grid-cols-9 gap-4 place-items-center">
-    <label
-      v-for="(logo, index) in logos"
-      :key="index"
-      class="cursor-pointer"
-      :class="{
-        'border-2': selectedLogos.includes(logo.value),
-        'border-primary': selectedLogos.includes(logo.value), /* กรอบสีหลัก */
-        'border-opacity-50': !selectedLogos.includes(logo.value), /* กรอบที่ไม่เลือก */
-        'transition-all': true,
-        'rounded-md': true
-      }"
-    >
-      <input type="checkbox" v-model="selectedLogos" :value="logo.value" class="hidden" />
-      <img
-        :src="logo.src"
-        :alt="logo.name"
-        class="w-16 h-16 sm:w-16 sm:h-16 rounded-md object-contain hover:opacity-75 transition-opacity duration-300"
-      />
-    </label>
-  </div>
-</fieldset>
+        <legend class="text-lg font-semibold mb-2 text-center text-dark"></legend>
+        <div class="grid grid-cols-3 sm:grid-cols-9 gap-4 place-items-center">
+          <label
+            v-for="(logo, index) in logos"
+            :key="index"
+            class="cursor-pointer"
+            :class="{
+              'border-2': selectedLogos.includes(logo.value),
+              'border-primary': selectedLogos.includes(logo.value) /* กรอบสีหลัก */,
+              'border-opacity-50': !selectedLogos.includes(logo.value) /* กรอบที่ไม่เลือก */,
+              'transition-all': true,
+              'rounded-md': true,
+            }"
+          >
+            <input type="checkbox" v-model="selectedLogos" :value="logo.value" class="hidden" />
+            <img
+              :src="logo.src"
+              :alt="logo.name"
+              class="w-16 h-16 sm:w-16 sm:h-16 rounded-md object-contain hover:opacity-75 transition-opacity duration-300"
+            />
+          </label>
+        </div>
+      </fieldset>
 
-
-<h1 class="custom-font text-lg font-semibold mb-2 text-center text-dark">ประเภทการใช้งาน</h1>
+      <h1 class="custom-font text-lg font-semibold mb-2 text-center text-dark">ประเภทการใช้งาน</h1>
       <!-- ประเภทการใช้งาน -->
       <fieldset class="mb-6 bg-gray-300 border-2 border-primary p-4 rounded-lg">
-  <legend class="text-lg font-semibold mb-2 text-center text-dark"></legend>
-  <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
-    <label
-      v-for="category in categories"
-      :key="category.value"
-      class="cursor-pointer"
-      :class="selectedCategory === category.value ? 'border-2  rounded-lg' : 'border-2 border-gray-300 rounded-lg'"
-    >
-      <input
-        type="radio"
-        name="category"
-        :value="category.value"
-        v-model="selectedCategory"
-        class="hidden"
-      />
-      <span
-        class="block custom-font text-center p-2 rounded-lg cursor-pointer"
-        :class="[category.color, selectedCategory === category.value ? 'bg-primary text-white' : 'text-black ']"
-      >
-        {{ category.label }}
-      </span>
-    </label>
-  </div>
-</fieldset>
+        <legend class="text-lg font-semibold mb-2 text-center text-dark"></legend>
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+          <label
+            v-for="category in categories"
+            :key="category.value"
+            class="cursor-pointer"
+            :class="
+              selectedCategory === category.value
+                ? 'border-2  rounded-lg'
+                : 'border-2 border-gray-300 rounded-lg'
+            "
+          >
+            <input
+              type="radio"
+              name="category"
+              :value="category.value"
+              v-model="selectedCategory"
+              class="hidden"
+            />
+            <span
+              class="block custom-font text-center p-2 rounded-lg cursor-pointer"
+              :class="[
+                category.color,
+                selectedCategory === category.value ? 'bg-primary text-white' : 'text-black ',
+              ]"
+            >
+              {{ category.label }}
+            </span>
+          </label>
+        </div>
+      </fieldset>
 
-
-<h1 class="custom-font text-lg font-semibold mb-2 text-center text-dark">ระดับราคา</h1>
+      <h1 class="custom-font text-lg font-semibold mb-2 text-center text-dark">ระดับราคา</h1>
       <!-- ระดับราคา -->
       <fieldset class="mb-6 bg-gray-300 border-2 border-primary p-4 rounded-lg">
-  <legend class="text-lg font-semibold mb-2 text-center text-dark"></legend>
-  <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
-    <label
-      v-for="(price, index) in prices"
-      :key="price.min"
-      class="cursor-pointer"
-      :class="{
-        'border-2 rounded-lg': selectedPrice.min === price.min && selectedPrice.max === price.max,
-        'border-2 border-gray-300 rounded-lg': selectedPrice.min !== price.min || selectedPrice.max !== price.max,
-        'col-span-full': index === prices.length - 1 // ใช้คลาส col-span-full สำหรับตัวสุดท้าย
-      }"
-    >
-      <input
-        type="radio"
-        name="Price"
-        v-model="selectedPrice"
-        :value="price"
-        class="hidden"
-        @click="togglePrice(price)"
-      />
-      <span
-        class="block custom-font items-center text-center p-2 rounded-lg cursor-pointer w-full"
-        :class="[price.color, selectedPrice.min === price.min && selectedPrice.max === price.max ? 'bg-primary text-white' : 'text-black']"
-        style="white-space: pre-line"
-      >
-        {{ price.label }}
-      </span>
-    </label>
-  </div>
-</fieldset>
-
-
+        <legend class="text-lg font-semibold mb-2 text-center text-dark"></legend>
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+          <label
+            v-for="(price, index) in prices"
+            :key="price.min"
+            class="cursor-pointer"
+            :class="{
+              'border-2 rounded-lg':
+                selectedPrice.min === price.min && selectedPrice.max === price.max,
+              'border-2 border-gray-300 rounded-lg':
+                selectedPrice.min !== price.min || selectedPrice.max !== price.max,
+              'col-span-full': index === prices.length - 1, // ใช้คลาส col-span-full สำหรับตัวสุดท้าย
+            }"
+          >
+            <input
+              type="radio"
+              name="Price"
+              v-model="selectedPrice"
+              :value="price"
+              class="hidden"
+              @click="togglePrice(price)"
+            />
+            <span
+              class="block custom-font items-center text-center p-2 rounded-lg cursor-pointer w-full"
+              :class="[
+                price.color,
+                selectedPrice.min === price.min && selectedPrice.max === price.max
+                  ? 'bg-primary text-white'
+                  : 'text-black',
+              ]"
+              style="white-space: pre-line"
+            >
+              {{ price.label }}
+            </span>
+          </label>
+        </div>
+      </fieldset>
 
       <!-- มือถือ -->
-      <fieldset class=" mb-6 border-2 border-primary p-4 rounded-lg" >
+      <fieldset class="mb-6 border-2 border-primary p-4 rounded-lg">
         <legend class="custom-font text-lg font-semibold mb-2 text-center text-dark">
-           เลือกโทรศัพท์มือถือ 3 รุ่น เพื่อทำการเปรียบเทียบ
+          เลือกโทรศัพท์มือถือ 3 รุ่น เพื่อทำการเปรียบเทียบ
         </legend>
         <div class="overflow-x-auto">
-
           <div
             class="flex flex-wrap gap-4 justify-start"
             style="max-height: calc(5 * 5rem); width: 100%"
@@ -134,48 +160,48 @@
               class="flex flex-col items-center w-1/3 sm:w-1/4 md:w-1/6"
               :class="selectedMobiles.includes(mobile.slug) ? '' : ''"
             >
-            <input
-  type="checkbox"
-  :id="'mobile' + index"
-  name="mobile"
-  :value="mobile.slug"
-  :disabled="selectedMobiles.length >= 3 && !selectedMobiles.includes(mobile.slug)"
-  v-model="selectedMobiles"
-  class="hidden"
-/>
-<div
-  class="flex custom-font flex-col items-center p-3 rounded-lg transition-all"
-  :class="selectedMobiles.includes(mobile.slug)
-    ? 'bg-primary-light border-2 border-primary text-white shadow-md'
-    : 'bg-white border border-gray-300 text-gray-700 hover:shadow-sm'"
->
-  <img
-    :src="mobile.image"
-    :alt="mobile.phone_name"
-    class="w-16 h-16 sm:w-24 sm:h-24 object-contain"
-  />
-  <label
-    :for="'mobile' + index"
-    class="mt-2 text-center text-sm font-medium"
-    :class="selectedMobiles.includes(mobile.slug) ? 'text-gray-800' : 'text-gray-800'"
-  >
-    {{ mobile.phone_name }}
-  </label>
-</div>
-
+              <input
+                type="checkbox"
+                :id="'mobile' + index"
+                name="mobile"
+                :value="mobile.slug"
+                :disabled="selectedMobiles.length >= 3 && !selectedMobiles.includes(mobile.slug)"
+                v-model="selectedMobiles"
+                class="hidden"
+              />
+              <div
+                class="flex custom-font flex-col items-center p-3 rounded-lg transition-all"
+                :class="
+                  selectedMobiles.includes(mobile.slug)
+                    ? 'bg-primary-light border-2 border-primary text-white shadow-md'
+                    : 'bg-white border border-gray-300 text-gray-700 hover:shadow-sm'
+                "
+              >
+                <img
+                  :src="mobile.image"
+                  :alt="mobile.phone_name"
+                  class="w-16 h-16 sm:w-24 sm:h-24 object-contain"
+                />
+                <label
+                  :for="'mobile' + index"
+                  class="mt-2 text-center text-sm font-medium"
+                  :class="selectedMobiles.includes(mobile.slug) ? 'text-gray-800' : 'text-gray-800'"
+                >
+                  {{ mobile.phone_name }}
+                </label>
+              </div>
             </label>
           </div>
         </div>
         <div>
           <button
-          @click="compare"
-          class="block mx-auto mt-4 bg-primary text-white py-2 px-4 rounded hover:bg-primary-hover transition-colors"
-        >
-          เปรียบเทียบ
-        </button>
-        <popup v-if="showPopup" :message="popupMessage" @close="closePopup" />
+            @click="compare"
+            class="block mx-auto mt-4 bg-primary text-white py-2 px-4 rounded hover:bg-primary-hover transition-colors"
+          >
+            เปรียบเทียบ
+          </button>
+          <popup v-if="showPopup" :message="popupMessage" @close="closePopup" />
         </div>
-
       </fieldset>
     </div>
   </div>
@@ -265,7 +291,7 @@ export default {
     }
   },
   mounted() {
-    setInterval(this.moveToNextBanner, 10000); // Slide every 10 seconds
+    setInterval(this.moveToNextBanner, 10000) // Slide every 10 seconds
   },
   methods: {
     togglePrice(price: Price) {
@@ -284,17 +310,17 @@ export default {
     },
     compare() {
       if (this.selectedMobiles.length !== 3) {
-        this.popupMessage = 'กรุณาเลือกข้อมูลให้ครบถ้วน';
-        this.showPopup = true;
+        this.popupMessage = 'กรุณาเลือกข้อมูลให้ครบถ้วน'
+        this.showPopup = true
       } else {
         this.$router.push({
           name: 'compare',
           query: { mobiles: JSON.stringify(this.selectedMobiles) },
-        });
+        })
       }
     },
     closePopup() {
-      this.showPopup = false;
+      this.showPopup = false
     },
 
     async fetchBrandDetails() {
@@ -327,10 +353,10 @@ export default {
       }
     },
     moveToPrevBanner() {
-      this.currentIndex = (this.currentIndex === 0 ? 1 : this.currentIndex - 1); // Loop back to last image
+      this.currentIndex = this.currentIndex === 0 ? 1 : this.currentIndex - 1 // Loop back to last image
     },
     moveToNextBanner() {
-      this.currentIndex = (this.currentIndex + 1) % 2; // Loop through 2 images
+      this.currentIndex = (this.currentIndex + 1) % 2 // Loop through 2 images
     },
   },
 
@@ -376,7 +402,6 @@ export default {
 
 .bg-primary {
   background-color: #000000;
-
 }
 
 .bg-primary-hover:hover {
