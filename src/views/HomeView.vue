@@ -1,23 +1,23 @@
 <template>
   <div class="flex justify-center items-center min-h-screen bg-dark p-4">
-    <div class="bg-light p-4 rounded-lg shadow-lg w-full max-w-4xl">
+    <div class="bg-light p-4 rounded-lg shadow-lg w-full max-w-6xl">
       <!-- Carousel with automatic banner slide -->
-      <div class="overflow-hidden relative" style="height: 300px; padding: 30 70px">
+      <div class="overflow-hidden relative" style="padding: 30 70px">
         <div
-          class="w-full h-full flex transition-all duration-1000"
+          class="w-full h-full flex transition-all duration-1000 "
           :style="{ transform: `translateX(-${currentIndex * 100}%)` }"
         >
           <img
             src="@/assets/img/banner1.png"
             alt="Banner 1"
             class="w-full h-full rounded-lg object-cover"
-            style="flex-shrink: 0; margin-right: 20px"
+            style="flex-shrink: 0;  aspect-ratio: 16/9; max-height: 350px;margin-right: 2px"
           />
           <img
             src="@/assets/img/banner2.png"
             alt="Banner 2"
             class="w-full h-full rounded-lg object-cover"
-            style="flex-shrink: 0"
+            style="flex-shrink: 0;  aspect-ratio: 16/9; max-height: 350px"
           />
         </div>
 
@@ -43,30 +43,30 @@
       <h1 class="custom-font text-lg font-semibold mb-2 text-center text-dark">แบรนด์</h1>
 
       <!-- แบรนด์ -->
-      <fieldset class="mb-6 border-2 border-primary p-4 rounded-lg">
-        <legend class="text-lg font-semibold mb-2 text-center text-dark"></legend>
-        <div class="grid grid-cols-3 sm:grid-cols-9 gap-4 place-items-center">
-          <label
-            v-for="(logo, index) in logos"
-            :key="index"
-            class="cursor-pointer"
-            :class="{
-              'border-2': selectedLogos.includes(logo.value),
-              'border-primary': selectedLogos.includes(logo.value) /* กรอบสีหลัก */,
-              'border-opacity-50': !selectedLogos.includes(logo.value) /* กรอบที่ไม่เลือก */,
-              'transition-all': true,
-              'rounded-md': true,
-            }"
-          >
-            <input type="checkbox" v-model="selectedLogos" :value="logo.value" class="hidden" />
-            <img
-              :src="logo.src"
-              :alt="logo.name"
-              class="w-16 h-16 sm:w-16 sm:h-16 rounded-md object-contain hover:opacity-75 transition-opacity duration-300"
-            />
-          </label>
-        </div>
-      </fieldset>
+<fieldset class="mb-6 border-2 border-primary p-4 rounded-lg flex flex-wrap justify-center gap-8">
+  <legend class="text-lg font-semibold mb-2 text-center text-dark">เลือกแบรนด์</legend>
+  <label
+    v-for="(logo, index) in logos"
+    :key="index"
+    class="cursor-pointer"
+    :class="{
+      'border-2': selectedLogos.includes(logo.value),
+      'border-primary': selectedLogos.includes(logo.value),
+      'border-opacity-50': !selectedLogos.includes(logo.value),
+      'transition-all': true,
+      'rounded-md': true,
+    }"
+  >
+    <input type="checkbox" v-model="selectedLogos" :value="logo.value" class="hidden" />
+    <img
+      :src="logo.src"
+      :alt="logo.name"
+      class="w-16 h-16 rounded-md object-contain hover:opacity-75 transition-opacity duration-300 "
+    />
+  </label>
+</fieldset>
+
+
 
       <h1 class="custom-font text-lg font-semibold mb-2 text-center text-dark">ประเภทการใช้งาน</h1>
       <!-- ประเภทการใช้งาน -->
@@ -145,13 +145,16 @@
       </fieldset>
 
       <!-- มือถือ -->
-      <fieldset class="mb-6 border-2 border-primary p-4 rounded-lg">
+      <fieldset class="mb-6 border-2 border-primary p-4 rounded-lg ">
         <legend class="custom-font text-lg font-semibold mb-2 text-center text-dark">
           เลือกโทรศัพท์มือถือ 3 รุ่น เพื่อทำการเปรียบเทียบ
         </legend>
-        <div class="overflow-x-auto">
+
+
+
+        <div class="overflow-x-auto flex justify-center items-center ">
           <div
-            class="flex flex-wrap gap-4 justify-start"
+            class="flex flex-wrap gap-4 justify-center "
             style="max-height: calc(5 * 5rem); width: 100%"
           >
             <label

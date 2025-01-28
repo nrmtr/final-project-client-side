@@ -1,6 +1,6 @@
 <template>
   <div class="flex justify-center items-center min-h-screen bg-dark p-4">
-    <div class="bg-light p-6 rounded-lg shadow-lg w-full max-w-6xl">
+    <div class="bg-light p-6 rounded-lg shadow-lg w-full max-w-7xl">
       <h1 class="custom-font text-center text-2xl font-bold mb-6 text-dark">การเปรียบเทียบ</h1>
       <div
         v-if="apicompare && apicompare.phones"
@@ -29,6 +29,8 @@
                 'bg-dark text-white': phone.specifications_score.display === maxScores.display,
                 'bg-gray-200 text-black': phone.specifications_score.display !== maxScores.display,
               }"
+              :style="{ 'height': '80px', 'overflow-y': 'auto' }"
+
             >
               <strong>หน้าจอ:</strong>
               {{ phone.spec.display }}
@@ -42,6 +44,7 @@
                 'bg-gray-200 text-black':
                   phone.specifications_score.processor !== maxScores.processor,
               }"
+              :style="{ 'height': '70px', 'overflow-y': 'auto' }"
             >
               <strong>โปรเซสเซอร์:</strong>
               {{ phone.spec.processor }}
@@ -54,6 +57,7 @@
                 'bg-dark text-white': phone.specifications_score.ram === maxScores.ram,
                 'bg-gray-200 text-black': phone.specifications_score.ram !== maxScores.ram,
               }"
+              :style="{ 'height': '65px', 'overflow-y': 'auto' }"
             >
               <strong>แรม:</strong>
               {{ phone.spec.ram }}
@@ -66,6 +70,7 @@
                 'bg-dark text-white': phone.specifications_score.camera === maxScores.camera,
                 'bg-gray-200 text-black': phone.specifications_score.camera !== maxScores.camera,
               }"
+              :style="{ 'height': '80px', 'overflow-y': 'auto' }"
             >
               <strong>กล้อง:</strong>
               {{ phone.spec.camera }}
@@ -78,6 +83,8 @@
                 'bg-dark text-white': phone.specifications_score.battery === maxScores.battery,
                 'bg-gray-200 text-black': phone.specifications_score.battery !== maxScores.battery,
               }"
+              :style="{ 'height': '60px', 'overflow-y': 'auto' }"
+
             >
               <strong>แบตเตอรี่:</strong>
               {{ phone.spec.battery }}
@@ -90,6 +97,7 @@
                 'bg-dark text-white': phone.score === maxTotalScore,
                 'bg-gray-200 text-black': phone.score !== maxTotalScore,
               }"
+              :style="{ 'max-height': '100px', 'overflow-y': 'auto' }"
             >
               <strong>คะแนนรวม:</strong>
               {{ phone.score }}
@@ -396,5 +404,19 @@ button:hover {
 
 .custom-font {
   font-family: 'FC-Subject-Rounded-Regular', sans-serif;
+}
+
+div[style*="overflow-y: auto"] {
+  overflow-y: auto; /* ทำให้สามารถเลื่อนในแนวตั้งได้ */
+  max-height: 100px; /* กำหนดความสูงสูงสุดของกล่อง */
+}
+
+div[style*="overflow-y: auto"]::-webkit-scrollbar {
+  display: none;  /* ซ่อน scrollbar ในเบราว์เซอร์ที่รองรับ Webkit */
+}
+
+div[style*="overflow-y: auto"] {
+  -ms-overflow-style: none;  /* ซ่อน scrollbar ใน IE และ Edge */
+  scrollbar-width: none;  /* ซ่อน scrollbar ใน Firefox */
 }
 </style>
