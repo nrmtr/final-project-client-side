@@ -255,11 +255,11 @@ export default {
 
       categories: [
         { label: 'ใช้งานทั่วไป', value: 'general', color: 'bg-gray-100  hover:bg-gray-400' },
-        { label: 'เล่นเกม', value: 'game', color: 'bg-gray-100 hover:bg-gray-400' },
-        { label: 'ถ่ายรูปสวย', value: 'photography', color: 'bg-gray-100 hover:bg-gray-400' },
+        { label: 'เล่นเกม', value: 'gaming', color: 'bg-gray-100 hover:bg-gray-400' },
+        { label: 'ถ่ายรูปสวย', value: 'take beautiful photos', color: 'bg-gray-100 hover:bg-gray-400' },
         { label: 'สำหรับไรเดอร์', value: 'rider', color: 'bg-gray-100 hover:bg-gray-400' },
-        { label: 'AI Feature', value: 'ai', color: 'bg-gray-100 hover:bg-gray-400' },
-        { label: 'วิดีโอ ไลฟ์สด', value: 'livestream', color: 'bg-gray-100 hover:bg-gray-400' },
+        { label: 'AI Feature', value: 'ai features', color: 'bg-gray-100 hover:bg-gray-400' },
+        { label: 'วิดีโอ ไลฟ์สด', value: 'live streaming', color: 'bg-gray-100 hover:bg-gray-400' },
       ],
       prices: [
         {
