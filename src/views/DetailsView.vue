@@ -78,7 +78,7 @@
                   @click="toggleAccordion(index, specIndex)"
                 >
                   <span class="font-semibold text-dark text-lg">{{ spec.title }}</span>
-                  <span>{{ isOpen(index, specIndex) ? '-' : '+' }}</span>
+                  <span style="color:black">{{ isOpen(index, specIndex) ? '-' : '+' }}</span>
                 </button>
                 <div v-show="isOpen(index, specIndex)" class="p-4 bg-gray-100">
                   <ul class="list-disc list-inside text-dark">
