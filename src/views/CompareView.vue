@@ -90,6 +90,20 @@
               {{ phone.spec.battery }}
             </div>
 
+            <!-- ราคา -->
+            <div
+              class="p-4 border-2 rounded-lg mb-2"
+              :class="{
+                'bg-dark text-white': phone.specifications_score.price === maxScores.price,
+                'bg-gray-200 text-black': phone.specifications_score.price !== maxScores.price,
+              }"
+              :style="{ 'height': '60px', 'overflow-y': 'auto' }"
+
+            >
+              <strong>ราคา:</strong>
+              {{ phone.spec.price }}
+            </div>
+
             <!-- คะแนนรวม -->
             <div
               class="p-4 border-2 rounded-lg mb-2"
@@ -194,6 +208,15 @@
                   .battery
               }}
             </li>
+
+            <!-- ราคา -->
+            <li class="p-2 rounded-lg mt-2 bg-light text-dark">
+              แบตเตอรี่:
+              {{
+                apicompare.phones.find((phone) => phone.name === apicompare?.bestPhone)?.spec
+                  .price
+              }}
+            </li>
           </ul>
 
           <!-- ปุ่มดูรายละเอียด -->
@@ -225,6 +248,7 @@ interface PhoneSpec {
   ram: string
   camera: string
   battery: string
+  price: string
 }
 interface PhoneSpecScore {
   display: number | null

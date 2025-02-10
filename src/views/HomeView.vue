@@ -190,7 +190,8 @@
                   class="mt-2 text-center text-sm font-medium"
                   :class="selectedMobiles.includes(mobile.slug) ? 'text-gray-800' : 'text-gray-800'"
                 >
-                  {{ mobile.phone_name }}
+                  {{ mobile.phone_name }}<br>
+                  {{ mobile.price }}
                 </label>
               </div>
             </label>
@@ -228,6 +229,7 @@ interface Mobile {
   slug: string
   image: string
   phone_name: string
+  price: string
 }
 interface Price {
   label: string
