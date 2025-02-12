@@ -87,13 +87,7 @@
     </ul>
               </div>
               <br>
-              <div class="p-2 rounded-lg bg-gray-100">
-                <h2 class="ml-2 text-xl font-bold custom-font text-dark">ข้อมูลมือถือ</h2>
-                <h1 class="ml-2 mt-4 mb-2 font-bold custom-font text-dark bg-gray-200 rounded-lg p-2">
-                  {{ phone.details }}
-                </h1>
-              </div>
-              <br>
+
 
               <div class="p-2 rounded-lg bg-gray-100">
                 <h2 class="ml-2 text-xl font-bold custom-font text-dark">รีวิว</h2>
