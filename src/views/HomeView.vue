@@ -4,20 +4,20 @@
       <!-- Carousel with automatic banner slide -->
       <div class="overflow-hidden relative" style="padding: 30 70px">
         <div
-          class="w-full h-full flex transition-all duration-1000 "
+          class="w-full h-full flex transition-all duration-1000"
           :style="{ transform: `translateX(-${currentIndex * 100}%)` }"
         >
           <img
             src="@/assets/img/banner1.png"
             alt="Banner 1"
             class="w-full h-full rounded-lg object-cover"
-            style="flex-shrink: 0;  aspect-ratio: 16/9; max-height: 350px;margin-right: 2px"
+            style="flex-shrink: 0; aspect-ratio: 16/9; max-height: 350px; margin-right: 2px"
           />
           <img
             src="@/assets/img/banner2.png"
             alt="Banner 2"
             class="w-full h-full rounded-lg object-cover"
-            style="flex-shrink: 0;  aspect-ratio: 16/9; max-height: 350px"
+            style="flex-shrink: 0; aspect-ratio: 16/9; max-height: 350px"
           />
         </div>
 
@@ -43,30 +43,30 @@
       <h1 class="custom-font text-lg font-semibold mb-2 text-center text-dark">แบรนด์</h1>
 
       <!-- แบรนด์ -->
-<fieldset class="mb-6 border-2 border-primary p-4 rounded-lg flex flex-wrap justify-center gap-8">
-  <legend class="text-lg font-semibold mb-2 text-center text-dark">เลือกแบรนด์</legend>
-  <label
-    v-for="(logo, index) in logos"
-    :key="index"
-    class="cursor-pointer"
-    :class="{
-      'border-2': selectedLogos.includes(logo.value),
-      'border-primary': selectedLogos.includes(logo.value),
-      'border-opacity-50': !selectedLogos.includes(logo.value),
-      'transition-all': true,
-      'rounded-md': true,
-    }"
-  >
-    <input type="checkbox" v-model="selectedLogos" :value="logo.value" class="hidden" />
-    <img
-      :src="logo.src"
-      :alt="logo.name"
-      class="w-16 h-16 rounded-md object-contain hover:opacity-75 transition-opacity duration-300 "
-    />
-  </label>
-</fieldset>
-
-
+      <fieldset
+        class="mb-6 border-2 border-primary p-4 rounded-lg flex flex-wrap justify-center gap-8"
+      >
+        <legend class="text-lg font-semibold mb-2 text-center text-dark">เลือกแบรนด์</legend>
+        <label
+          v-for="(logo, index) in logos"
+          :key="index"
+          class="cursor-pointer"
+          :class="{
+            'border-2': selectedLogos.includes(logo.value),
+            'border-primary': selectedLogos.includes(logo.value),
+            'border-opacity-50': !selectedLogos.includes(logo.value),
+            'transition-all': true,
+            'rounded-md': true,
+          }"
+        >
+          <input type="checkbox" v-model="selectedLogos" :value="logo.value" class="hidden" />
+          <img
+            :src="logo.src"
+            :alt="logo.name"
+            class="w-16 h-16 rounded-md object-contain hover:opacity-75 transition-opacity duration-300"
+          />
+        </label>
+      </fieldset>
 
       <h1 class="custom-font text-lg font-semibold mb-2 text-center text-dark">ประเภทการใช้งาน</h1>
       <!-- ประเภทการใช้งาน -->
@@ -109,52 +109,44 @@
         <legend class="text-lg font-semibold mb-2 text-center text-dark"></legend>
         <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
           <label
-            v-for="(price, index) in prices"
-            :key="price.min"
+            v-for="pricer in price_range"
+            :key="pricer.value"
             class="cursor-pointer"
-            :class="{
-              'border-2 rounded-lg':
-                selectedPrice.min === price.min && selectedPrice.max === price.max,
-              'border-2 border-gray-300 rounded-lg':
-                selectedPrice.min !== price.min || selectedPrice.max !== price.max,
-              'col-span-full': index === prices.length - 1, // ใช้คลาส col-span-full สำหรับตัวสุดท้าย
-            }"
+            :class="
+              selectedPrice === pricer.value
+                ? 'border-2  rounded-lg'
+                : 'border-2 border-gray-300 rounded-lg'
+            "
           >
             <input
               type="radio"
-              name="Price"
+              name="category"
+              :value="pricer.value"
               v-model="selectedPrice"
-              :value="price"
               class="hidden"
-              @click="togglePrice(price)"
             />
             <span
-              class="block custom-font items-center text-center p-2 rounded-lg cursor-pointer w-full"
+              class="block custom-font text-center p-2 rounded-lg cursor-pointer"
               :class="[
-                price.color,
-                selectedPrice.min === price.min && selectedPrice.max === price.max
-                  ? 'bg-primary text-white'
-                  : 'text-black',
+                pricer.color,
+                selectedPrice === pricer.value ? 'bg-primary text-white' : 'text-black ',
               ]"
-              style="white-space: pre-line"
             >
-              {{ price.label }}
+              {{ pricer.label }}
             </span>
           </label>
         </div>
       </fieldset>
 
       <!-- มือถือ -->
-      <fieldset class="mb-6 border-2 border-primary p-4 rounded-lg ">
+      <fieldset class="mb-6 border-2 border-primary p-4 rounded-lg">
         <legend class="custom-font text-lg font-semibold mb-2 text-center text-dark">
           เลือกโทรศัพท์มือถือ 3 รุ่น เพื่อทำการเปรียบเทียบ
         </legend>
 
-
-
-        <div class="overflow-x-auto flex justify-center items-center ">
+        <div class="overflow-x-auto flex justify-center items-center">
           <div
-            class="flex flex-wrap gap-4 justify-center "
+            class="flex flex-wrap gap-4 justify-center"
             style="max-height: calc(5 * 5rem); width: 100%"
           >
             <label
@@ -190,9 +182,11 @@
                   class="mt-2 text-center text-sm font-medium"
                   :class="selectedMobiles.includes(mobile.slug) ? 'text-gray-800' : 'text-gray-800'"
                 >
-                <div class="text-lg font-semibold text-blue-600">{{ mobile.phone_name }}</div>
-                <div class="mt-2 text-sm text-gray-500">ใส่ปีตรงนี้นะบลู</div>
-                <div class="font-semibold mt-2 text-sm text-gray-700">{{ mobile.price }}</div>
+                  <div class="text-lg font-semibold text-blue-600">{{ mobile.phone_name }}</div>
+                  <div class="mt-2 text-sm text-gray-500">{{ mobile.age }}</div>
+                  <div class="font-semibold mt-2 text-sm text-gray-700">
+                    {{ mobile.price.formatted }}
+                  </div>
                 </label>
               </div>
             </label>
@@ -230,13 +224,8 @@ interface Mobile {
   slug: string
   image: string
   phone_name: string
-  price: string
-}
-interface Price {
-  label: string
-  min: number
-  max: number
-  color: string
+  age: string
+  price: { raw: string; formatted: string }
 }
 export default {
   components: {
@@ -259,36 +248,37 @@ export default {
       categories: [
         { label: 'ใช้งานทั่วไป', value: 'general', color: 'bg-gray-100  hover:bg-gray-400' },
         { label: 'เล่นเกม', value: 'gaming', color: 'bg-gray-100 hover:bg-gray-400' },
-        { label: 'ถ่ายรูปสวย', value: 'take beautiful photos', color: 'bg-gray-100 hover:bg-gray-400' },
+        {
+          label: 'ถ่ายรูปสวย',
+          value: 'take beautiful photos',
+          color: 'bg-gray-100 hover:bg-gray-400',
+        },
         { label: 'สำหรับไรเดอร์', value: 'rider', color: 'bg-gray-100 hover:bg-gray-400' },
         { label: 'AI Feature', value: 'ai features', color: 'bg-gray-100 hover:bg-gray-400' },
         { label: 'วิดีโอ ไลฟ์สด', value: 'live streaming', color: 'bg-gray-100 hover:bg-gray-400' },
       ],
-      prices: [
+      price_range: [
         {
-          label: 'ระดับเริ่มต้น\n 0 - 5,000',
-          min: 1,
-          max: 5000,
+          label: 'ระดับเริ่มต้น\n 0 - 10,000',
+          value: '0-10000',
           color: 'bg-gray-100 hover:bg-gray-400',
         },
         {
-          label: 'ระดับกลาง\n 8,000 - 15,000',
-          min: 8000,
-          max: 15000,
+          label: 'ระดับกลาง\n 10,000 - 25,000',
+          value: '10000-25000',
           color: 'bg-gray-100 hover:bg-gray-400',
         },
         {
           label: 'ระดับพรีเมี่ยม\n 25,000 +++',
-          min: 25000,
-          max: 1000000,
+          value: '25000++',
           color: 'bg-gray-100 hover:bg-gray-400',
         },
-      ] as Price[],
+      ],
       selectedLogos: [] as string[],
       selectedMobiles: [] as string[], // Store selected logo values here
       apiResponse: { data: [] as Mobile[] }, // To store the response from the API
       selectedCategory: '',
-      selectedPrice: { min: 0, max: 1000000 } as Price,
+      selectedPrice: '',
       // To store API response data
       currentIndex: 0,
       isVisible: true,
@@ -300,20 +290,6 @@ export default {
     setInterval(this.moveToNextBanner, 10000) // Slide every 10 seconds
   },
   methods: {
-    togglePrice(price: Price) {
-      if (this.selectedPrice.min === price.min && this.selectedPrice.max === price.max) {
-        // Reset selection with default values
-        this.selectedPrice = {
-          label: 'ค่าเริ่มต้น',
-          min: 0,
-          max: 1000000,
-          color: 'bg-gray-500',
-        }
-      } else {
-        // Set new selection
-        this.selectedPrice = price
-      }
-    },
     compare() {
       if (this.selectedMobiles.length !== 3) {
         this.popupMessage = 'กรุณาเลือกข้อมูลให้ 3 รุ่น'
@@ -330,7 +306,7 @@ export default {
     },
 
     async fetchBrandDetails() {
-      if (this.selectedLogos.length === 0 || this.selectedCategory.length === 0) {
+      if (this.selectedLogos.length === 0 || this.selectedCategory.length === 0 || this.selectedPrice.length === 0) {
         this.apiResponse = { data: [] }
         return
       }
@@ -339,6 +315,7 @@ export default {
         const payload = {
           brand: this.selectedLogos, // ส่งค่าที่เลือก
           category: this.selectedCategory, // ส่งประเภทการใช้งานที่เลือก
+          price_range: this.selectedPrice,
         }
         const response = await axios.post('http://13.251.160.30/api/phone/typeofuse', payload, {
           headers: {
@@ -368,11 +345,7 @@ export default {
 
   watch: {
     selectedPrice() {
-      if (this.selectedPrice.min && this.selectedPrice.max) {
-        this.fetchBrandDetails() // ดึงข้อมูลเมื่อมีแบรนด์ถูกเลือก
-      } else {
-        this.apiResponse = { data: [] }
-      }
+      this.fetchBrandDetails()
     },
     selectedLogos() {
       this.fetchBrandDetails()
