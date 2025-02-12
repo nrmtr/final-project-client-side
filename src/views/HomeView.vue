@@ -104,39 +104,38 @@
       </fieldset>
 
       <h1 class="custom-font text-lg font-semibold mb-2 text-center text-dark">ระดับราคา</h1>
-      <!-- ระดับราคา -->
-      <fieldset class="mb-6 bg-gray-300 border-2 border-primary p-4 rounded-lg">
-        <legend class="text-lg font-semibold mb-2 text-center text-dark"></legend>
-        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
-          <label
-            v-for="pricer in price_range"
-            :key="pricer.value"
-            class="cursor-pointer"
-            :class="
-              selectedPrice === pricer.value
-                ? 'border-2  rounded-lg'
-                : 'border-2 border-gray-300 rounded-lg'
-            "
-          >
-            <input
-              type="radio"
-              name="category"
-              :value="pricer.value"
-              v-model="selectedPrice"
-              class="hidden"
-            />
-            <span
-              class="block custom-font text-center p-2 rounded-lg cursor-pointer"
-              :class="[
-                pricer.color,
-                selectedPrice === pricer.value ? 'bg-primary text-white' : 'text-black ',
-              ]"
-            >
-              {{ pricer.label }}
-            </span>
-          </label>
-        </div>
-      </fieldset>
+     <!-- ระดับราคา -->
+<fieldset class="mb-6 bg-gray-300 border-2 border-primary p-4 rounded-lg">
+  <legend class="text-lg font-semibold mb-2 text-center text-dark"></legend>
+  <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+    <label
+      v-for="(pricer, index) in price_range"
+      :key="pricer.value"
+      class="cursor-pointer flex "
+      :class="[
+        selectedPrice === pricer.value ? 'border-2 rounded-lg' : 'border-2 border-gray-300 rounded-lg',
+        index === price_range.length - 1 ? 'col-span-full ' : '' // ทำให้ปุ่มสุดท้ายขยายเต็มแถว
+      ]"
+    >
+      <input
+        type="radio"
+        name="category"
+        :value="pricer.value"
+        v-model="selectedPrice"
+        class="hidden"
+      />
+      <span
+        class="block custom-font text-center p-4 rounded-lg cursor-pointer w-full "
+        :class="[
+          pricer.color,
+          selectedPrice === pricer.value ? 'bg-primary text-white' : 'text-black'
+        ]"
+      >
+        {{ pricer.label }}
+      </span>
+    </label>
+  </div>
+</fieldset>
 
       <!-- มือถือ -->
       <fieldset class="mb-6 border-2 border-primary p-4 rounded-lg">
