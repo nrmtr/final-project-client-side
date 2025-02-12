@@ -190,8 +190,9 @@
                   class="mt-2 text-center text-sm font-medium"
                   :class="selectedMobiles.includes(mobile.slug) ? 'text-gray-800' : 'text-gray-800'"
                 >
-                  {{ mobile.phone_name }}<br>
-                  {{ mobile.price }}
+                <div class="text-lg font-semibold text-blue-600">{{ mobile.phone_name }}</div>
+                <div class="mt-2 text-sm text-gray-500">ใส่ปีตรงนี้นะบลู</div>
+                <div class="font-semibold mt-2 text-sm text-gray-700">{{ mobile.price }}</div>
                 </label>
               </div>
             </label>
@@ -315,7 +316,7 @@ export default {
     },
     compare() {
       if (this.selectedMobiles.length !== 3) {
-        this.popupMessage = 'กรุณาเลือกข้อมูลให้ครบถ้วน'
+        this.popupMessage = 'กรุณาเลือกข้อมูลให้ 3 รุ่น'
         this.showPopup = true
       } else {
         this.$router.push({
