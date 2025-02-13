@@ -15,136 +15,127 @@
             <div class="mb-6 bg-gray-300">
               <div class="text-center p-2 rounded-lg bg-gray-100">
                 <h2 class="mt-2 text-xl font-bold custom-font text-dark">
-                {{ phone.name }}
-              </h2>
-              <img
-                :src="phone.image"
-                alt="Phone image"
-                class="mx-auto w-40 h-54 object-contain rounded-lg mt-4 mb-4"
-              />
+                  {{ phone.name }}
+                </h2>
+                <img
+                  :src="phone.image"
+                  alt="Phone image"
+                  class="mx-auto w-40 h-54 object-contain rounded-lg mt-4 mb-4"
+                />
               </div>
-              <br>
+              <br />
               <div class="p-2 rounded-lg bg-gray-100">
                 <h2 class="ml-2 text-xl font-bold custom-font text-dark">ประเภทการใช้งาน</h2>
                 <ul class="ml-2 mt-4 mb-2 list-disc list-inside">
-      <!-- ตรวจสอบว่า phone.tags เป็นอาร์เรย์หรือไม่ -->
-      <template v-if="Array.isArray(phone.tags)">
-        <!-- แสดงผลแต่ละข้อดีเป็น <li> -->
-        <li
-          v-for="(adv, index) in phone.tags"
-          :key="index"
-          class="bg-gray-200 rounded-lg p-2 mb-2 font-bold custom-font text-dark"
-        >
-          {{ adv.name }}
-        </li>
-      </template>
-      <!-- หากไม่ใช่อาร์เรย์ แสดงผลเป็นข้อความเดียว -->
-      <li v-else class="bg-gray-200 rounded-lg p-2 mb-2">
-        {{ phone.tags || 'ไม่มีข้อมูล' }}
-      </li>
-    </ul>
+                  <!-- ตรวจสอบว่า phone.tags เป็นอาร์เรย์หรือไม่ -->
+                  <template v-if="Array.isArray(phone.tags)">
+                    <!-- แสดงผลแต่ละข้อดีเป็น <li> -->
+                    <li
+                      v-for="(adv, index) in phone.tags"
+                      :key="index"
+                      class="bg-gray-200 rounded-lg p-2 mb-2 font-bold custom-font text-dark"
+                    >
+                      {{ adv.name }}
+                    </li>
+                  </template>
+                  <!-- หากไม่ใช่อาร์เรย์ แสดงผลเป็นข้อความเดียว -->
+                  <li v-else class="bg-gray-200 rounded-lg p-2 mb-2">
+                    {{ phone.tags || 'ไม่มีข้อมูล' }}
+                  </li>
+                </ul>
               </div>
-              <br>
+              <br />
               <div class="p-2 rounded-lg bg-gray-100">
                 <h2 class="ml-2 text-xl font-bold custom-font text-dark">ข้อดี</h2>
                 <ul class="ml-2 mt-4 mb-2 list-disc list-inside">
-      <!-- ตรวจสอบว่า phone.advantages เป็นอาร์เรย์หรือไม่ -->
-      <template v-if="Array.isArray(phone.advantages)">
-        <!-- แสดงผลแต่ละข้อดีเป็น <li> -->
-        <li
-          v-for="(adv, index) in phone.advantages"
-          :key="index"
-          class="bg-gray-200 rounded-lg p-2 mb-2 font-bold custom-font text-dark"
-        >
-          {{ adv.description }}
-        </li>
-      </template>
-      <!-- หากไม่ใช่อาร์เรย์ แสดงผลเป็นข้อความเดียว -->
-      <li v-else class="bg-gray-200 rounded-lg p-2 mb-2">
-        {{ phone.advantages || 'ไม่มีข้อมูล' }}
-      </li>
-    </ul>
+                  <!-- ตรวจสอบว่า phone.advantages เป็นอาร์เรย์หรือไม่ -->
+                  <template v-if="Array.isArray(phone.advantages)">
+                    <!-- แสดงผลแต่ละข้อดีเป็น <li> -->
+                    <li
+                      v-for="(adv, index) in phone.advantages"
+                      :key="index"
+                      class="bg-gray-200 rounded-lg p-2 mb-2 font-bold custom-font text-dark"
+                    >
+                      {{ adv.description }}
+                    </li>
+                  </template>
+                  <!-- หากไม่ใช่อาร์เรย์ แสดงผลเป็นข้อความเดียว -->
+                  <li v-else class="bg-gray-200 rounded-lg p-2 mb-2">
+                    {{ phone.advantages || 'ไม่มีข้อมูล' }}
+                  </li>
+                </ul>
               </div>
-              <br>
-              <div class="p-2 rounded-lg bg-gray-100 ">
+              <br />
+              <div class="p-2 rounded-lg bg-gray-100">
                 <h2 class="ml-2 text-xl font-bold custom-font text-dark">ข้อเสีย</h2>
                 <ul class="ml-2 mt-4 mb-2 list-disc list-inside">
-      <!-- ตรวจสอบว่า phone.disadvantages เป็นอาร์เรย์หรือไม่ -->
-      <template v-if="Array.isArray(phone.disadvantages)">
-        <!-- แสดงผลแต่ละข้อดีเป็น <li> -->
-        <li
-          v-for="(adv, index) in phone.disadvantages"
-          :key="index"
-          class="bg-gray-200 rounded-lg p-2 mb-2 font-bold custom-font text-dark"
-        >
-          {{ adv.description }}
-        </li>
-      </template>
-      <!-- หากไม่ใช่อาร์เรย์ แสดงผลเป็นข้อความเดียว -->
-      <li v-else class="bg-gray-200 rounded-lg p-2 mb-2">
-        {{ phone.disadvantages || 'ไม่มีข้อมูล' }}
-      </li>
-    </ul>
+                  <!-- ตรวจสอบว่า phone.disadvantages เป็นอาร์เรย์หรือไม่ -->
+                  <template v-if="Array.isArray(phone.disadvantages)">
+                    <!-- แสดงผลแต่ละข้อดีเป็น <li> -->
+                    <li
+                      v-for="(adv, index) in phone.disadvantages"
+                      :key="index"
+                      class="bg-gray-200 rounded-lg p-2 mb-2 font-bold custom-font text-dark"
+                    >
+                      {{ adv.description }}
+                    </li>
+                  </template>
+                  <!-- หากไม่ใช่อาร์เรย์ แสดงผลเป็นข้อความเดียว -->
+                  <li v-else class="bg-gray-200 rounded-lg p-2 mb-2">
+                    {{ phone.disadvantages || 'ไม่มีข้อมูล' }}
+                  </li>
+                </ul>
               </div>
-              <br>
-
+              <br />
 
               <div class="p-2 rounded-lg bg-gray-100">
                 <h2 class="ml-2 text-xl font-bold custom-font text-dark">รีวิว</h2>
-    <div class="flex flex-col gap-2 mt-4">
-      <div
-        v-for="(review, index) in phone.reviews"
-        :key="index"
-        class="mb-2"
-      >
-        <!-- แสดงผลเป็น iframe หากลิงก์เป็นวิดีโอ -->
-        <iframe
-          v-if="isVideoLink(review.review_link)"
-          :src="getEmbedUrl(review.review_link)"
-          class="w-full h-48 rounded-lg"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen
-        ></iframe>
+                <div class="flex flex-col gap-2 mt-4">
+                  <div v-for="(review, index) in phone.reviews" :key="index" class="mb-2">
+                    <!-- แสดงผลเป็น iframe หากลิงก์เป็นวิดีโอ -->
+                    <iframe
+                      v-if="isVideoLink(review.review_link)"
+                      :src="getEmbedUrl(review.review_link)"
+                      class="w-full h-48 rounded-lg"
+                      frameborder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowfullscreen
+                    ></iframe>
 
-        <!-- แสดงผลเป็นลิงก์ธรรมดาหากไม่ใช่วิดีโอ -->
+                    <!-- แสดงผลเป็นลิงก์ธรรมดาหากไม่ใช่วิดีโอ -->
 
-        <button
-          v-else
-          class="px-4 py-2 rounded-lg bg-gray-900 text-white hover:bg-gray-600 transition-all"
-        >
-          <a :href="review.review_link" target="_blank" class="text-white">
-            ดูรีวิว {{ index + 1 }}
-          </a>
-        </button>
-      </div>
-    </div>
+                    <button
+                      v-else
+                      class="px-4 py-2 rounded-lg bg-gray-900 text-white hover:bg-gray-600 transition-all"
+                    >
+                      <a :href="review.review_link" target="_blank" class="text-white">
+                        ดูรีวิว {{ index + 1 }}
+                      </a>
+                    </button>
+                  </div>
+                </div>
               </div>
 
-              <br>
+              <br />
 
               <div class="p-2 rounded-lg bg-gray-100">
                 <h2 class="ml-2 text-xl font-bold custom-font text-dark">ร้านค้า</h2>
                 <div class="flex flex-col gap-2 mt-4">
                   <button
-                  v-for="(shop, index) in phone.shops"
-                  :key="index"
-                  class="px-4 py-2 rounded-lg bg-gray-900 text-white hover:bg-gray-600 transition-all">
-                  <a :href="shop.shop_link" target="_blank" class="text-white">
-                  ดูร้านค้า {{ index + 1 }}
-                  </a>
+                    v-for="(shop, index) in phone.shops"
+                    :key="index"
+                    class="px-4 py-2 rounded-lg bg-gray-900 text-white hover:bg-gray-600 transition-all"
+                  >
+                    <a :href="shop.shop_link" target="_blank" class="text-white">
+                      ดูร้านค้า {{ index + 1 }}
+                    </a>
                   </button>
                 </div>
               </div>
-
-
-
             </div>
 
-
-
             <!-- Phone Specifications -->
-            <div >
+            <div>
               <h3 class="text-lg font-bold custom-font text-dark mb-4">สเปคมือถือ:</h3>
               <div
                 v-for="(spec, specIndex) in phone.specifications"
@@ -156,7 +147,7 @@
                   @click="toggleAccordion(index, specIndex)"
                 >
                   <span class="font-semibold text-dark text-lg">{{ spec.title }}</span>
-                  <span style="color:black">{{ isOpen(index, specIndex) ? '-' : '+' }}</span>
+                  <span style="color: black">{{ isOpen(index, specIndex) ? '-' : '+' }}</span>
                 </button>
                 <div v-show="isOpen(index, specIndex)" class="p-4 bg-gray-100">
                   <ul class="list-disc list-inside text-dark">
@@ -193,23 +184,23 @@ interface ApiResponse {
 }
 
 interface Shop {
-  shop_link: string;
+  shop_link: string
 }
 
 interface Review {
-  review_link: string;
+  review_link: string
 }
 
 interface Tag {
-  name: string;
+  name: string
 }
 
 interface Advantage {
-  description: string;
+  description: string
 }
 
 interface Disadvantage {
-  description: string;
+  description: string
 }
 
 interface Phone {
@@ -218,7 +209,7 @@ interface Phone {
   name: string
   slug: string
   image: string
-  tags : Tag[]
+  tags: Tag[]
   advantages: Advantage[]
   disadvantages: Disadvantage[]
   details: string
@@ -235,7 +226,7 @@ export default defineComponent({
     return {
       selectedphones: [] as string[], // List of selected phones from query params
       apicompare: null as ApiResponse | null, // API response data
-      openAccordions: new Map<string, Set<number>>() // Track open accordion states
+      openAccordions: new Map<string, Set<number>>(), // Track open accordion states
     }
   },
   mounted() {
@@ -250,32 +241,32 @@ export default defineComponent({
   methods: {
     // ตรวจสอบว่าลิงก์เป็นวิดีโอหรือไม่
     isVideoLink(link: string): boolean {
-      return link.includes('youtube.com') || link.includes('vimeo.com');
+      return link.includes('youtube.com') || link.includes('vimeo.com')
     },
     // แปลงลิงก์วิดีโอเป็น embed URL
     getEmbedUrl(link: string): string {
       if (link.includes('youtube.com')) {
-        const videoId = this.extractYouTubeId(link);
-        return `https://www.youtube.com/embed/${videoId}`;
+        const videoId = this.extractYouTubeId(link)
+        return `https://www.youtube.com/embed/${videoId}`
       } else if (link.includes('vimeo.com')) {
-        const videoId = this.extractVimeoId(link);
-        return `https://player.vimeo.com/video/${videoId}`;
+        const videoId = this.extractVimeoId(link)
+        return `https://player.vimeo.com/video/${videoId}`
       }
-      return link;
+      return link
     },
 
     // ดึง video ID จากลิงก์ YouTube
     extractYouTubeId(link: string): string {
-      const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
-      const match = link.match(regExp);
-      return match && match[2].length === 11 ? match[2] : '';
+      const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/
+      const match = link.match(regExp)
+      return match && match[2].length === 11 ? match[2] : ''
     },
 
     // ดึง video ID จากลิงก์ Vimeo
     extractVimeoId(link: string): string {
-      const regExp = /^.*(vimeo.com\/)((channels\/[A-z]+\/)|(groups\/[A-z]+\/videos\/))?([0-9]+)/;
-      const match = link.match(regExp);
-      return match ? match[5] : '';
+      const regExp = /^.*(vimeo.com\/)((channels\/[A-z]+\/)|(groups\/[A-z]+\/videos\/))?([0-9]+)/
+      const match = link.match(regExp)
+      return match ? match[5] : ''
     },
 
     async fetchdetails() {
@@ -305,27 +296,27 @@ export default defineComponent({
               slug: phone.slug,
               image: phone.image,
               tags: Array.isArray(phone.tags)
-              ? phone.tags.map((adv: any) => adv.name).join(', ')
-              : phone.tags || 'N/A',
+                ? phone.tags.map((adv: any) => adv.name).join(', ')
+                : phone.tags || 'N/A',
               advantages: Array.isArray(phone.advantages)
-              ? phone.advantages.map((adv: any) => adv.description).join(', ')
-              : phone.advantages || 'N/A',
+                ? phone.advantages.map((adv: any) => adv.description).join(', ')
+                : phone.advantages || 'N/A',
               disadvantages: Array.isArray(phone.disadvantages)
-              ? phone.disadvantages.map((adv: any) => adv.description).join(', ')
-              : phone.disadvantages || 'N/A',
+                ? phone.disadvantages.map((adv: any) => adv.description).join(', ')
+                : phone.disadvantages || 'N/A',
 
               details: phone.details,
               reviews: Array.isArray(phone.reviews)
-              ? phone.reviews.map((adv: any) => adv.review_link).join(', ')
-              : phone.reviews || 'N/A',
+                ? phone.reviews.map((adv: any) => adv.review_link).join(', ')
+                : phone.reviews || 'N/A',
               shops: Array.isArray(phone.shops)
-      ? phone.shops.map((shop: any) => ({ shop_link: shop }))
-      : [{ shop_link: phone.shops || 'N/A' }],
+                ? phone.shops.map((shop: any) => ({ shop_link: shop }))
+                : [{ shop_link: phone.shops || 'N/A' }],
               specifications: phone.specifications.map((spec: any) => ({
                 title: spec.title,
                 specs: spec.specs.map((s: any) => ({
                   key: s.key,
-                  val: Array.isArray(s.val) ? s.val.join(', ') : s.val  || 'N/A',
+                  val: Array.isArray(s.val) ? s.val.join(', ') : s.val || 'N/A',
                 })),
               })),
             }))
