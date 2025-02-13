@@ -29,8 +29,7 @@
                 'bg-dark text-white': phone.specifications_score.display === maxScores.display,
                 'bg-gray-200 text-black': phone.specifications_score.display !== maxScores.display,
               }"
-              :style="{ 'height': '80px', 'overflow-y': 'auto' }"
-
+              :style="{ height: '80px', 'overflow-y': 'auto' }"
             >
               <strong>หน้าจอ:</strong>
               {{ phone.spec.display }}
@@ -44,7 +43,7 @@
                 'bg-gray-200 text-black':
                   phone.specifications_score.processor !== maxScores.processor,
               }"
-              :style="{ 'height': '70px', 'overflow-y': 'auto' }"
+              :style="{ height: '70px', 'overflow-y': 'auto' }"
             >
               <strong>โปรเซสเซอร์:</strong>
               {{ phone.spec.processor }}
@@ -57,7 +56,7 @@
                 'bg-dark text-white': phone.specifications_score.ram === maxScores.ram,
                 'bg-gray-200 text-black': phone.specifications_score.ram !== maxScores.ram,
               }"
-              :style="{ 'height': '65px', 'overflow-y': 'auto' }"
+              :style="{ height: '65px', 'overflow-y': 'auto' }"
             >
               <strong>แรม:</strong>
               {{ phone.spec.ram }}
@@ -70,7 +69,7 @@
                 'bg-dark text-white': phone.specifications_score.camera === maxScores.camera,
                 'bg-gray-200 text-black': phone.specifications_score.camera !== maxScores.camera,
               }"
-              :style="{ 'height': '80px', 'overflow-y': 'auto' }"
+              :style="{ height: '80px', 'overflow-y': 'auto' }"
             >
               <strong>กล้อง:</strong>
               {{ phone.spec.camera }}
@@ -83,8 +82,7 @@
                 'bg-dark text-white': phone.specifications_score.battery === maxScores.battery,
                 'bg-gray-200 text-black': phone.specifications_score.battery !== maxScores.battery,
               }"
-              :style="{ 'height': '60px', 'overflow-y': 'auto' }"
-
+              :style="{ height: '60px', 'overflow-y': 'auto' }"
             >
               <strong>แบตเตอรี่:</strong>
               {{ phone.spec.battery }}
@@ -94,11 +92,10 @@
             <div
               class="p-4 border-2 rounded-lg mb-2"
               :class="{
-                'bg-dark text-white': phone.specifications_score.price === maxScores.price,
-                'bg-gray-200 text-black': phone.specifications_score.price !== maxScores.price,
+                'bg-dark text-white': phone.specifications_score.price === minScores.price,
+                'bg-gray-200 text-black': phone.specifications_score.price !== minScores.price,
               }"
-              :style="{ 'height': '60px', 'overflow-y': 'auto' }"
-
+              :style="{ height: '60px', 'overflow-y': 'auto' }"
             >
               <strong>ราคา:</strong>
               {{ phone.spec.price }}
@@ -213,21 +210,27 @@
             <li class="p-2 rounded-lg mt-2 bg-light text-dark">
               แบตเตอรี่:
               {{
-                apicompare.phones.find((phone) => phone.name === apicompare?.bestPhone)?.spec
-                  .price
+                apicompare.phones.find((phone) => phone.name === apicompare?.bestPhone)?.spec.price
               }}
             </li>
           </ul>
 
           <!-- ปุ่มดูรายละเอียด -->
           <button
-              class="block mx-auto mt-4 bg-primary text-white py-2 px-4 rounded hover:bg-primary-hover transition-colors"
-              @click="
-                $router.push({ name: 'details', query: { mobiles: JSON.stringify([apicompare.phones.find((phone) => phone.name === apicompare?.bestPhone)?.slug]) } })
-              "
-            >
-              ดูรายละเอียด
-            </button>
+            class="block mx-auto mt-4 bg-primary text-white py-2 px-4 rounded hover:bg-primary-hover transition-colors"
+            @click="
+              $router.push({
+                name: 'details',
+                query: {
+                  mobiles: JSON.stringify([
+                    apicompare.phones.find((phone) => phone.name === apicompare?.bestPhone)?.slug,
+                  ]),
+                },
+              })
+            "
+          >
+            ดูรายละเอียด
+          </button>
         </div>
       </div>
       <div v-else>
@@ -296,6 +299,23 @@ export default defineComponent({
 
       return maxScores
     },
+    minScores(): Record<string, number | null> {
+      if (!this.apicompare || !this.apicompare.phones) return {}
+
+      const keys = ['display', 'processor', 'ram', 'camera', 'battery', 'price']
+      const minScores: Record<string, number | null> = {}
+
+      keys.forEach((key) => {
+        const scores = this.apicompare!.phones.map(
+          (phone) => phone.specifications_score[key as keyof PhoneSpecScore]
+        ).filter((score): score is number => score !== null) // กรอง null ออก
+
+        minScores[key] = scores.length ? Math.min(...scores) : null
+      })
+
+      return minScores
+    },
+
     maxTotalScore(): number | null {
       if (!this.apicompare || !this.apicompare.phones) return null
 
@@ -430,17 +450,17 @@ button:hover {
   font-family: 'FC-Subject-Rounded-Regular', sans-serif;
 }
 
-div[style*="overflow-y: auto"] {
+div[style*='overflow-y: auto'] {
   overflow-y: auto; /* ทำให้สามารถเลื่อนในแนวตั้งได้ */
   max-height: 100px; /* กำหนดความสูงสูงสุดของกล่อง */
 }
 
-div[style*="overflow-y: auto"]::-webkit-scrollbar {
-  display: none;  /* ซ่อน scrollbar ในเบราว์เซอร์ที่รองรับ Webkit */
+div[style*='overflow-y: auto']::-webkit-scrollbar {
+  display: none; /* ซ่อน scrollbar ในเบราว์เซอร์ที่รองรับ Webkit */
 }
 
-div[style*="overflow-y: auto"] {
-  -ms-overflow-style: none;  /* ซ่อน scrollbar ใน IE และ Edge */
-  scrollbar-width: none;  /* ซ่อน scrollbar ใน Firefox */
+div[style*='overflow-y: auto'] {
+  -ms-overflow-style: none; /* ซ่อน scrollbar ใน IE และ Edge */
+  scrollbar-width: none; /* ซ่อน scrollbar ใน Firefox */
 }
 </style>
