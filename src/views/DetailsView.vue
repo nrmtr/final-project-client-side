@@ -177,7 +177,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import axios from 'axios'
-
+const API_BASE_URL = import.meta.env.VUE_APP_API_BASE_URL;
 // Type definitions
 interface ApiResponse {
   phoneDetails: Phone[] // Array of phone objects
@@ -271,7 +271,7 @@ export default defineComponent({
 
     async fetchdetails() {
       const selectedPhones = this.selectedphones.join(',')
-      const url = `http://13.251.160.30/api/phone/phone_details/${selectedPhones}`
+      const url = `${API_BASE_URL}/phone/phone_details/${selectedPhones}`
       console.log('Requesting data from:', url)
 
       try {

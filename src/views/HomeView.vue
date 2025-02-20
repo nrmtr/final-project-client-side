@@ -220,7 +220,7 @@ import RealmeLogo from '../assets/img/logo_realme.png'
 import axios from 'axios'
 import { defineComponent } from 'vue'
 import Popup from './BBPopup.vue'
-
+const API_BASE_URL = import.meta.env.VUE_APP_API_BASE_URL;
 interface Mobile {
   slug: string
   image: string
@@ -322,7 +322,7 @@ export default {
           category: this.selectedCategory, // ส่งประเภทการใช้งานที่เลือก
           price_range: this.selectedPrice,
         }
-        const response = await axios.post('http://13.251.160.30/api/phone/typeofuse', payload, {
+        const response = await axios.post(`${API_BASE_URL}/phone/typeofuse`, payload, {
           headers: {
             'Content-Type': 'application/json',
           },

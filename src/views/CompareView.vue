@@ -244,7 +244,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import axios from 'axios'
-
+const API_BASE_URL = import.meta.env.VUE_APP_API_BASE_URL;
 interface PhoneSpec {
   display: string
   processor: string
@@ -334,7 +334,7 @@ export default defineComponent({
         }
         console.log('Payload being sent:', payload)
 
-        const response = await axios.post('http://13.251.160.30/api/phone/compare', payload, {
+        const response = await axios.post(`${API_BASE_URL}/phone/compare`, payload, {
           headers: {
             'Content-Type': 'application/json',
           },
