@@ -244,7 +244,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import axios from 'axios'
-const API_BASE_URL = import.meta.env.VUE_APP_API_BASE_URL;
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 interface PhoneSpec {
   display: string
   processor: string
