@@ -221,8 +221,6 @@ import axios from 'axios'
 import { defineComponent } from 'vue'
 import Popup from './BBPopup.vue'
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-
-console.log("API_BASE_URL",API_BASE_URL);
 interface Mobile {
   slug: string
   image: string
