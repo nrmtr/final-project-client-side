@@ -49,17 +49,17 @@
               {{ phone.spec.processor }}
             </div>
 
-            <!-- แรม -->
+            <!-- หน่วยความจํา -->
             <div
               class="p-4 border-2 rounded-lg mb-2"
               :class="{
-                'bg-dark text-white': phone.specifications_score.ram === maxScores.ram,
-                'bg-gray-200 text-black': phone.specifications_score.ram !== maxScores.ram,
+                'bg-dark text-white': phone.specifications_score.memory === maxScores.memory,
+                'bg-gray-200 text-black': phone.specifications_score.memory !== maxScores.memory,
               }"
               :style="{ height: '65px', 'overflow-y': 'auto' }"
             >
-              <strong>แรม:</strong>
-              {{ phone.spec.ram }}
+              <strong>หน่วยความจํา:</strong>
+              {{ phone.spec.memory }}
             </div>
 
             <!-- กล้อง -->
@@ -181,11 +181,11 @@
               }}
             </li>
 
-            <!-- แรม -->
+            <!-- หน่วยความจํา -->
             <li class="p-2 rounded-lg mt-2 bg-light text-dark">
-              แรม:
+              หน่วยความจํา:
               {{
-                apicompare.phones.find((phone) => phone.name === apicompare?.bestPhone)?.spec.ram
+                apicompare.phones.find((phone) => phone.name === apicompare?.bestPhone)?.spec.memory
               }}
             </li>
 
@@ -208,7 +208,7 @@
 
             <!-- ราคา -->
             <li class="p-2 rounded-lg mt-2 bg-light text-dark">
-              แบตเตอรี่:
+              ราคา:
               {{
                 apicompare.phones.find((phone) => phone.name === apicompare?.bestPhone)?.spec.price
               }}
@@ -248,7 +248,7 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 interface PhoneSpec {
   display: string
   processor: string
-  ram: string
+  memory: string
   camera: string
   battery: string
   price: string
@@ -256,7 +256,7 @@ interface PhoneSpec {
 interface PhoneSpecScore {
   display: number | null
   processor: number | null
-  ram: number | null
+  memory: number | null
   camera: number | null
   battery: number | null
   price: number | null
@@ -286,7 +286,7 @@ export default defineComponent({
     maxScores(): Record<string, number | null> {
       if (!this.apicompare || !this.apicompare.phones) return {}
 
-      const keys = ['display', 'processor', 'ram', 'camera', 'battery', 'price']
+      const keys = ['display', 'processor', 'memory', 'camera', 'battery', 'price']
       const maxScores: Record<string, number | null> = {}
 
       keys.forEach((key) => {
@@ -302,7 +302,7 @@ export default defineComponent({
     minScores(): Record<string, number | null> {
       if (!this.apicompare || !this.apicompare.phones) return {}
 
-      const keys = ['display', 'processor', 'ram', 'camera', 'battery', 'price']
+      const keys = ['display', 'processor', 'memory', 'camera', 'battery', 'price']
       const minScores: Record<string, number | null> = {}
 
       keys.forEach((key) => {
