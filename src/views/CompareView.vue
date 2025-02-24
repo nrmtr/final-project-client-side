@@ -153,7 +153,7 @@
           <!-- คะแนนรวม -->
           <div class="mb-4 custom-font text-dark">
             <strong>คะแนนรวม</strong>
-            <li class="p-2 rounded-lg mt-2 bg-light text-dark">
+            <li class="p-2 rounded-lg mt-2 bg-light text-dark text-lg list-none">
               <strong>{{ apicompare.phones.find((phone) => phone.name === apicompare?.bestPhone)?.score }}</strong>
             </li>
           </div>
