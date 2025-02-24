@@ -2,6 +2,7 @@
   <div class="flex justify-center items-center min-h-screen bg-dark p-4">
     <div class="bg-light p-6 rounded-lg shadow-lg w-full max-w-7xl">
       <h1 class="custom-font text-center text-2xl font-bold mb-6 text-dark">การเปรียบเทียบ</h1>
+      <h2 class="custom-font font-bold mb-6 text-green-600 text-end italic">* สีเขียว คือ คูณสมบัติที่ดีที่สุด</h2>
       <div
         v-if="apicompare && apicompare.phones"
         class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
@@ -26,7 +27,7 @@
             <div
               class="p-4 border-2 rounded-lg mb-2"
               :class="{
-                'bg-dark text-white': phone.specifications_score.display === maxScores.display,
+                'bg-green-600 text-white': phone.specifications_score.display === maxScores.display,
                 'bg-gray-200 text-black': phone.specifications_score.display !== maxScores.display,
               }"
               :style="{ height: '80px', 'overflow-y': 'auto' }"
@@ -39,7 +40,7 @@
             <div
               class="p-4 border-2 rounded-lg mb-2"
               :class="{
-                'bg-dark text-white': phone.specifications_score.processor === maxScores.processor,
+                'bg-green-600 text-white': phone.specifications_score.processor === maxScores.processor,
                 'bg-gray-200 text-black':
                   phone.specifications_score.processor !== maxScores.processor,
               }"
@@ -53,10 +54,10 @@
             <div
               class="p-4 border-2 rounded-lg mb-2"
               :class="{
-                'bg-dark text-white': phone.specifications_score.memory === maxScores.memory,
+                'bg-green-600 text-white': phone.specifications_score.memory === maxScores.memory,
                 'bg-gray-200 text-black': phone.specifications_score.memory !== maxScores.memory,
               }"
-              :style="{ height: '65px', 'overflow-y': 'auto' }"
+              :style="{ height: '90px', 'overflow-y': 'auto' }"
             >
               <strong>หน่วยความจํา:</strong>
               {{ phone.spec.memory }}
@@ -66,10 +67,10 @@
             <div
               class="p-4 border-2 rounded-lg mb-2"
               :class="{
-                'bg-dark text-white': phone.specifications_score.camera === maxScores.camera,
+                'bg-green-600 text-white': phone.specifications_score.camera === maxScores.camera,
                 'bg-gray-200 text-black': phone.specifications_score.camera !== maxScores.camera,
               }"
-              :style="{ height: '80px', 'overflow-y': 'auto' }"
+              :style="{ height: '100px', 'overflow-y': 'auto' }"
             >
               <strong>กล้อง:</strong>
               {{ phone.spec.camera }}
@@ -79,7 +80,7 @@
             <div
               class="p-4 border-2 rounded-lg mb-2"
               :class="{
-                'bg-dark text-white': phone.specifications_score.battery === maxScores.battery,
+                'bg-green-600 text-white': phone.specifications_score.battery === maxScores.battery,
                 'bg-gray-200 text-black': phone.specifications_score.battery !== maxScores.battery,
               }"
               :style="{ height: '60px', 'overflow-y': 'auto' }"
@@ -92,7 +93,7 @@
             <div
               class="p-4 border-2 rounded-lg mb-2"
               :class="{
-                'bg-dark text-white': phone.specifications_score.price === minScores.price,
+                'bg-green-600 text-white': phone.specifications_score.price === minScores.price,
                 'bg-gray-200 text-black': phone.specifications_score.price !== minScores.price,
               }"
               :style="{ height: '60px', 'overflow-y': 'auto' }"
@@ -105,7 +106,7 @@
             <div
               class="p-4 border-2 rounded-lg mb-2"
               :class="{
-                'bg-dark text-white': phone.score === maxTotalScore,
+                'bg-green-600 text-white': phone.score === maxTotalScore,
                 'bg-gray-200 text-black': phone.score !== maxTotalScore,
               }"
               :style="{ 'max-height': '100px', 'overflow-y': 'auto' }"
@@ -153,7 +154,7 @@
           <div class="mb-4 custom-font text-dark">
             <strong>คะแนนรวม</strong>
             <li class="p-2 rounded-lg mt-2 bg-light text-dark">
-              {{ apicompare.phones.find((phone) => phone.name === apicompare?.bestPhone)?.score }}
+              <strong>{{ apicompare.phones.find((phone) => phone.name === apicompare?.bestPhone)?.score }}</strong>
             </li>
           </div>
 

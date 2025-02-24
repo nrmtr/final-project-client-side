@@ -1,6 +1,6 @@
 <template>
-  <div class="flex justify-center items-center min-h-screen bg-dark p-4">
-    <div class="bg-light p-4 rounded-lg shadow-lg w-full max-w-6xl">
+  <div class="flex justify-center items-center min-h-screen  p-4">
+    <div class="bg-home p-4 rounded-lg shadow-lg w-full max-w-6xl">
       <!-- Carousel with automatic banner slide -->
       <div class="overflow-hidden relative" style="padding: 30 70px">
         <div
@@ -44,17 +44,17 @@
 
       <!-- แบรนด์ -->
       <fieldset
-        class="mb-6 border-2 border-primary p-4 rounded-lg flex flex-wrap justify-center gap-8"
+        class=" mb-6 border-2 border-primary p-4 rounded-lg flex flex-wrap justify-center gap-8"
       >
-        <legend class="text-lg font-semibold mb-2 text-center text-dark">เลือกแบรนด์</legend>
+        <legend class="text-lg font-semibold mb-2 text-center text-dark">เลือกได้มากว่า 1 รุ่น</legend>
         <label
           v-for="(logo, index) in logos"
           :key="index"
           class="cursor-pointer"
           :class="{
             'border-2': selectedLogos.includes(logo.value),
-            'border-primary': selectedLogos.includes(logo.value),
-            'border-opacity-50': !selectedLogos.includes(logo.value),
+            'border-gray-600': selectedLogos.includes(logo.value),
+            'border-opacity-100': !selectedLogos.includes(logo.value),
             'transition-all': true,
             'rounded-md': true,
           }"
@@ -63,14 +63,14 @@
           <img
             :src="logo.src"
             :alt="logo.name"
-            class="w-16 h-16 rounded-md object-contain hover:opacity-75 transition-opacity duration-300"
+            class="w-16 h-16 rounded-md object-contain hover:opacity-75 transition-opacity duration-300 "
           />
         </label>
       </fieldset>
 
       <h1 class="custom-font text-lg font-semibold mb-2 text-center text-dark">ประเภทการใช้งาน</h1>
       <!-- ประเภทการใช้งาน -->
-      <fieldset class="mb-6 bg-gray-300 border-2 border-primary p-4 rounded-lg">
+      <fieldset class="mb-6  bg-gray-300 border-2 border-primary p-4 rounded-lg">
         <legend class="text-lg font-semibold mb-2 text-center text-dark"></legend>
         <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
           <label
@@ -79,8 +79,8 @@
             class="cursor-pointer"
             :class="
               selectedCategory === category.value
-                ? 'border-2  rounded-lg'
-                : 'border-2 border-gray-300 rounded-lg'
+                ? '  border-2 rounded-lg'
+                : ' border-2 rounded-lg'
             "
           >
             <input
@@ -91,10 +91,10 @@
               class="hidden"
             />
             <span
-              class="block custom-font text-center p-2 rounded-lg cursor-pointer"
+              class="block custom-font text-center p-2 rounded-lg cursor-pointer hover:bg-green-200 "
               :class="[
                 category.color,
-                selectedCategory === category.value ? 'bg-primary text-white' : 'text-black ',
+                selectedCategory === category.value ? 'bg-green-600 text-white' : 'text-black ',
               ]"
             >
               {{ category.label }}
@@ -115,7 +115,7 @@
             :class="[
               selectedPrice === pricer.value
                 ? 'border-2 rounded-lg'
-                : 'border-2 border-gray-300 rounded-lg',
+                : 'border-2 rounded-lg',
               index === price_range.length - 1 ? 'col-span-full ' : '', // ทำให้ปุ่มสุดท้ายขยายเต็มแถว
             ]"
           >
@@ -127,10 +127,10 @@
               class="hidden"
             />
             <span
-              class="block custom-font text-center p-4 rounded-lg cursor-pointer w-full"
+              class="block custom-font text-center p-4 rounded-lg cursor-pointer w-full hover:bg-green-200 "
               :class="[
                 pricer.color,
-                selectedPrice === pricer.value ? 'bg-primary text-white' : 'text-black',
+                selectedPrice === pricer.value ? 'bg-green-600 border-green-300 text-white' : 'text-black',
               ]"
             >
               {{ pricer.label }}
@@ -169,7 +169,7 @@
                 class="flex custom-font flex-col items-center p-3 rounded-lg transition-all"
                 :class="
                   selectedMobiles.includes(mobile.slug)
-                    ? 'bg-primary-light border-2 border-primary text-white shadow-md'
+                    ? 'bg-green-200 border-2 border-green-300 text-white shadow-md'
                     : 'bg-white border border-gray-300 text-gray-700 hover:shadow-sm'
                 "
               >
@@ -367,6 +367,11 @@ export default {
 .bg-dark {
   background-color: #000000;
 }
+
+.bg-home {
+  background-color: #ffffff;
+}
+
 
 .bg-light {
   background-color: #ffffff;
